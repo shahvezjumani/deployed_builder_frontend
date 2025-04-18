@@ -12,13 +12,15 @@ import {
 } from "react-router-dom";
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
+import Profile from "./pages/Profile.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route>
       <Route path="/" element={<Login />} />
-      <Route path="/home" element={<App />} />
+      <Route path="/profile/home" element={<App />} />
       <Route path="/signup" element={<Signup />} />
+      <Route path="/:slug" element={<Profile />} />
     </Route>
   )
 );

@@ -11,6 +11,8 @@ import Footer from "./components/Footer/Footer";
 import axios from "axios";
 import { use } from "react";
 import Loader from "./components/Loader";
+import { useNavigate, useParams } from "react-router-dom";
+import useUserAuthContext from "./components/contexts/userAuthContext";
 
 // Add a simple Loader component
 
@@ -20,6 +22,10 @@ const App = () => {
   const themes = ["theme-dark", "theme-light", "theme-golden", "theme-sky"];
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
+  const { slug } = useParams();
+  // console.log(slug);
+  const { login, logout } = useUserAuthContext();
 
   // Save updates to localStorage whenever `users` changes
   useEffect(() => {
@@ -34,6 +40,7 @@ const App = () => {
         setError(null);
         setUsers(response.data.data);
         setLoading(false);
+        login();
         console.log(response.data.data, "I am a devleper");
       } catch (err) {
         let errorMessage = "Something went wrong Shahvez";
@@ -45,6 +52,8 @@ const App = () => {
         }
         setError(errorMessage);
         setLoading(false); // Make sure to set loading to false even on error
+        logout();
+        navigate("/");
       }
     };
     getUser();
@@ -85,13 +94,13 @@ const App = () => {
     }));
   };
 
-  const login = () => {
-    setStatus(true);
-  };
+  // const login = () => {
+  //   setStatus(true);
+  // };
 
-  const logout = () => {
-    setStatus(false);
-  };
+  // const logout = () => {
+  //   setStatus(false);
+  // };
 
   console.log(users);
 
@@ -103,9 +112,7 @@ const App = () => {
   // Show main content once loading is complete
   return (
     <ReactLenis root>
-      <UserProvider
-        value={{ users, status, updateUser, login, logout, updateUserProfile }}
-      >
+      <UserProvider value={{ users, status, updateUser, updateUserProfile }}>
         <Header />
         <main>
           <Hero />

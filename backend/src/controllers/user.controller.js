@@ -299,18 +299,28 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const getUserBySlug = asyncHandler(async (req, res) => {
   const { slug } = req.params;
+  console.log("what an amazing point");
 
-  const user = await User.findOne({ slug })
-    .select("-password -refreshToken")
-    .populate("projects");
+  const user = await User.findOne({ slug }).select("-password -refreshToken");
 
   if (!user) {
     throw new ApiError(404, "User not found");
   }
 
+  let userResponse = user.toObject();
+  const projects = await Project.find({ owner: user._id }).select("-owner");
+  if (projects?.length > 0) {
+    // user.projects = projects;
+    // console.log(projects)
+    // Convert to plain object
+    userResponse.projects = projects;
+  }
+
   return res
     .status(200)
-    .json(new ApiResponse(200, user, "User profile fetched successfully"));
+    .json(
+      new ApiResponse(200, userResponse, "User profile fetched successfully")
+    );
 });
 
 const refreshAccessToken = asyncHandler(async (req, res) => {

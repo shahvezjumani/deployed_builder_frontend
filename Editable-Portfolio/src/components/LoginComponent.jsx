@@ -52,7 +52,7 @@ const LoginComponent = () => {
       // console.log(response.data.data.user);
 
       // updateUserProfile(response.data.data.user);
-      navigate("/home");
+      navigate("/profile/home");
       //   setFormData({ email: "", password: "" });
     } catch (err) {
       let errorMessage = "Something went wrong Shahvez";

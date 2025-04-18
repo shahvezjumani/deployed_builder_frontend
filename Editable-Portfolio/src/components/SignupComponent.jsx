@@ -47,7 +47,14 @@ const SignupComponent = () => {
         }
       );
       setResponse(response.data);
+      // console.log(response.data.data);
+      console.log(response.data.data.slug);
+
       setError(null);
+      alert(
+        `Your Profile URL is : "http://localhost:5173/
+        ${response.data.data.slug}"`
+      );
       // dispatch(authLogin(response.data.data));
       navigate("/");
       //   setFormData({ email: "", password: "" });
@@ -132,7 +139,7 @@ const SignupComponent = () => {
                 ref={usernameRef}
               />
             </div> */}
-            
+
             <div className="mb-4">
               {/* <label className="block text-zinc-300 text-sm font-semibold mb-2">
                 Email
