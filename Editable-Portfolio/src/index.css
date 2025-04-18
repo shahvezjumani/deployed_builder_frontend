@@ -1,0 +1,445 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Background Colors */
+    --background-color: #18181b; /* Root background color */
+    --navbar-bg-color: #18181b; /* Matches bg-zinc-900 */
+    --img-box-bg-color: #3f3f46; /* Matches bg-zinc-700 */
+    --btn-primary-bg-color: #38bdf8; /* Matches sky-400 */
+    --btn-primary-hover-bg-color: #7dd3fc; /* Matches sky-300 */
+    --btn-secondary-bg-color: #fafafa; /* Matches zinc-50 */
+    --secondary-color: #27272a80;
+    --skill-background-color: #3f3f4680;
+
+    /* Text Colors */
+    --text-color: #fafafa; /* Root text color */
+    --secondary-text-color: #a1a1aa; /* Gradient in .headline-1 */
+    --nav-link-text-color: rgba(24, 24, 27, 0.8); /* Matches zinc-900/80 */
+    --hover-nav-link-text-color: #18181b; /* Matches zinc-900 */
+    --settings-link-text-color: rgba(
+      250,
+      250,
+      250,
+      0.5
+    ); /* Matches zinc-50/50 */
+    --active-settings-link-text-color: #18181b; /* Matches zinc-900 */
+    --primary-text-color: #38bdf8;
+    --desc-text-color: #d4d4d8;
+
+    /* Border and Ring Colors */
+    --border-color: rgba(250, 250, 250, 0.05); /* Matches ring-zinc-50/5 */
+    --navbar-ring-color: rgba(250, 250, 250, 0.9); /* Matches ring-zinc-50/90 */
+    --btn-ring-color: rgba(
+      250,
+      250,
+      250,
+      0.02
+    ); /* Matches ring-zinc-50/[0.02] */
+
+    /* Opacity and Transparency Colors */
+    --navbar-blur-bg-color: rgba(
+      250,
+      250,
+      250,
+      0.7
+    ); /* Matches bg-zinc-50/70 */
+    --action-btn-bg-color: rgba(250, 250, 250, 0.1); /* Matches bg-zinc-50/10 */
+    --hover-action-btn-bg-color: rgba(
+      250,
+      250,
+      250,
+      0.2
+    ); /* Matches bg-zinc-50/20 */
+    --active-box-bg-color: rgba(24, 24, 27, 0.9); /* Matches bg-zinc-900/90 */
+    --skill-hover-bg-color: #27272a; /* Matches bg-zinc-800 */
+
+    /* Gradient Colors */
+    --gradient-start-color: #fafafa; /* Start of gradient in .headline-1 */
+    --gradient-end-color: #a1a1aa; /* End of gradient in .headline-1 */
+  }
+
+  .theme-light {
+    /* Background Colors */
+    --background-color: #f4f4f5; /* Root background color for light theme */
+    --navbar-bg-color: #ffffff; /* Light navbar background */
+    --img-box-bg-color: #e4e4e7; /* Matches bg-zinc-200 */
+    --btn-primary-bg-color: #d9dade; /* Matches blue-600 */
+    --btn-primary-hover-bg-color: #bcc5d5; /* Matches blue-500 */
+    --btn-secondary-bg-color: rgb(208 212 218 / 90%); /* Matches zinc-900 */
+    --secondary-color: #d4d4d880;
+    --skill-background-color: #3f3f4680;
+
+    /* Text Colors */
+    --text-color: #1f2937; /* Root text color */
+    --secondary-text-color: #71717a; /* Gradient in .headline-1 */
+    --nav-link-text-color: rgba(31, 41, 55, 0.8); /* Matches zinc-900/80 */
+    --hover-nav-link-text-color: #111827; /* Matches zinc-900 */
+    --settings-link-text-color: rgba(31, 41, 55, 0.5); /* Matches zinc-900/50 */
+    --active-settings-link-text-color: #111827; /* Matches zinc-900 */
+    --primary-text-color: #2563eb; /* Matches blue-600 */
+    --desc-text-color: #4b5563; /* Subtle description text */
+
+    /* Border and Ring Colors */
+    --border-color: rgb(13 13 14 / 38%); /* Matches ring-zinc-900/10 */
+    --navbar-ring-color: rgb(13 13 14 / 38%); /* Matches ring-zinc-900/20 */
+    --btn-ring-color: rgba(31, 41, 55, 0.05); /* Matches ring-zinc-900/[0.05] */
+
+    /* Opacity and Transparency Colors */
+    --navbar-blur-bg-color: rgba(
+      255,
+      255,
+      255,
+      0.7
+    ); /* Matches bg-zinc-50/70 */
+    --action-btn-bg-color: rgb(157 175 172 / 31%); /* Matches bg-zinc-50/10 */
+    --hover-action-btn-bg-color: rgb(
+      45 51 129 / 20%
+    ); /* Matches bg-zinc-50/20 */
+    --active-box-bg-color: rgb(208 212 218 / 90%); /* Matches bg-zinc-900/90 */
+
+    /* Gradient Colors */
+    --gradient-start-color: #000000de; /* Start of gradient in .headline-1 */
+    --gradient-end-color: #7a8696c4; /* End of gradient in .headline-1 */
+  }
+
+  .theme-sky {
+    /* Background Colors */
+    --background-color: #e0f7ff; /* Sky blue root background */
+    --navbar-bg-color: #cce7f9; /* Lighter blue for navbar */
+    --img-box-bg-color: #b3daf3; /* Matches sky-300 */
+    --btn-primary-bg-color: #38bdf8; /* Sky-400 */
+    --btn-primary-hover-bg-color: #7dd3fc; /* Sky-300 */
+    --btn-secondary-bg-color: #f0faff; /* Light complement */
+    --secondary-color: #90cdf4; /* Subtle sky-200 */
+    --skill-background-color: #229bc0ab;
+
+    /* Text Colors */
+    --text-color: #1e3a8a; /* Deep blue for text */
+    --secondary-text-color: #64748b; /* Cool gray for secondary text */
+    --nav-link-text-color: #0c4a6e; /* Navy-blue links */
+    --hover-nav-link-text-color: #075985; /* Hover effect */
+    --settings-link-text-color: #94a3b8; /* Subtle blue-gray */
+    --active-settings-link-text-color: #1e3a8a; /* Active link deep blue */
+    --primary-text-color: #38bdf8; /* Matches sky-400 */
+    --desc-text-color: #475569; /* Cool gray */
+
+    /* Border and Ring Colors */
+    --border-color: rgba(56, 189, 248, 0.5); /* Sky-400 with transparency */
+    --navbar-ring-color: rgba(14, 165, 233, 0.7); /* Matches sky-500/70 */
+    --btn-ring-color: rgba(56, 189, 248, 0.2); /* Sky-400/20 */
+
+    /* Opacity and Transparency Colors */
+    --navbar-blur-bg-color: rgba(236, 253, 255, 0.8); /* Matches sky-50/80 */
+    --action-btn-bg-color: rgba(219, 234, 254, 0.7); /* Sky-200/70 */
+    --hover-action-btn-bg-color: rgba(191, 219, 254, 0.8); /* Sky-100/80 */
+    --active-box-bg-color: rgba(59, 130, 246, 0.9); /* Sky-600/90 */
+
+    /* Gradient Colors */
+    --gradient-start-color: #38bdf8; /* Start of gradient in .headline-1 */
+    --gradient-end-color: #7dd3fc; /* End of gradient in .headline-1 */
+  }
+
+  .theme-golden {
+    /* General Backgrounds */
+    --background-color: #383d03; /* Darker golden base */
+    --navbar-bg-color: #262626; /* Deep shadow tone */
+    --img-box-bg-color: #3b3b40; /* Muted metallic gray */
+    --btn-primary-bg-color: linear-gradient(
+      45deg,
+      #fbbf24,
+      #f59e0b
+    ); /* Golden gradient */
+    --btn-primary-hover-bg-color: linear-gradient(
+      45deg,
+      #fcd34d,
+      #f59e0b
+    ); /* Brighter hover gradient */
+    --btn-secondary-bg-color: #82740f; /* Neutral tone for secondary actions */
+    --secondary-color: rgba(255, 183, 0, 0.1); /* Subtle golden shadow */
+    --skill-background-color: #7e8428ba;
+
+    /* Text Colors */
+    --text-color: #ffd700; /* Classic golden text */
+    --secondary-text-color: #ffecb3; /* Light gold */
+    --nav-link-text-color: rgba(255, 223, 0, 0.8); /* Vibrant gold links */
+    --hover-nav-link-text-color: #fff8dc; /* Soft champagne */
+    --settings-link-text-color: rgba(255, 215, 0, 0.5); /* Subtle muted gold */
+    --active-settings-link-text-color: #ffecb3; /* Light golden active state */
+    --primary-text-color: #ffcc00; /* Bright gold for primary highlights */
+    --desc-text-color: #e6be8a; /* Pale gold for subtle description text */
+
+    /* Border and Ring Colors */
+    --border-color: rgba(255, 223, 0, 0.2); /* Light golden ring */
+    --navbar-ring-color: rgba(255, 215, 0, 0.8); /* Highlighted ring */
+    --btn-ring-color: rgba(255, 223, 0, 0.5); /* Glow for buttons */
+
+    /* Opacity and Transparency Colors */
+    --navbar-blur-bg-color: rgba(255, 215, 0, 0.1); /* Subtle overlay effect */
+    --action-btn-bg-color: rgba(
+      255,
+      215,
+      0,
+      0.05
+    ); /* Golden shadow for buttons */
+    --hover-action-btn-bg-color: rgba(
+      255,
+      223,
+      0,
+      0.15
+    ); /* Brighter shadow for hover */
+    --active-box-bg-color: rgba(255, 204, 0, 0.9); /* Golden active state */
+
+    /* Gradient Colors */
+    --gradient-start-color: #fbbf24; /* Warm golden tone */
+    --gradient-middle-color: #ffcc00; /* Vibrant gold */
+    --gradient-end-color: #fff8dc; /* Soft champagne finish */
+  }
+}
+
+/* html {
+  scroll-behavior: smooth;
+}
+
+body {
+  @apply bg-zinc-900 text-zinc-50 h-[200vh];
+}
+
+
+.action-btn {
+  @apply w-10 h-10 grid place-items-center bg-zinc-50/10 rounded-xl ring-inset ring-1 ring-zinc-50/[0.02] backdrop-blur-2xl hover:bg-zinc-50/20 transition-[transform,background-color] active:scale-95;
+}
+
+.navbar {
+  @apply absolute right-0 top-full mt-2 min-w-40 p-2 bg-zinc-50/70 rounded-2xl ring-inset ring-1 ring-zinc-50/90 scale-90 isolate blur-sm opacity-0 invisible transition-[transform,opacity,filter] md:static md:flex md:items-center md:top-0 md:visible md:blur-0 md:opacity-100 md:scale-100 md:backdrop-blur-2xl;
+}
+
+.navbar.active {
+  @apply opacity-100 scale-100 blur-0 visible;
+}
+
+.nav-link {
+  @apply grid items-center h-9 px-4 justify-start text-sm font-medium tracking-wide text-zinc-900/80 hover:text-zinc-900  transition-colors;
+}
+
+.nav-link.active {
+  @apply text-zinc-50 duration-500;
+}
+
+.navbar .active-box {
+  @apply absolute bg-zinc-900/90 rounded-xl -z-10 transition-[left,top] duration-500;
+} */
+
+html {
+  scroll-behavior: smooth;
+  /* @apply dark; */
+}
+
+body {
+  @apply bg-skin-backgroundColor text-skin-base h-[100vh];
+}
+
+/* Navbar */
+
+.action-btn {
+  @apply w-10 h-10 grid place-items-center bg-skin-actionBtn rounded-xl ring-inset ring-1 ring-skin-btnRing backdrop-blur-2xl hover:bg-skin-hoverActionBtn transition-[transform,background-color] active:scale-95;
+}
+
+.navbar {
+  @apply absolute right-0 top-full mt-2 min-w-40 p-2 bg-skin-navbarBlur rounded-2xl ring-inset ring-1 ring-skin-navbarRing scale-90 isolate blur-sm opacity-0 invisible transition-[transform,opacity,filter] md:static md:flex md:items-center md:top-0 md:visible md:blur-0 md:opacity-100 md:scale-100 md:backdrop-blur-2xl;
+}
+
+.navbar.active {
+  @apply opacity-100 scale-100 blur-0 visible;
+}
+
+.nav-link {
+  @apply grid items-center h-9 px-4 justify-start text-sm font-medium tracking-wide text-skin-navLink hover:text-skin-hoverNavLink transition-colors;
+}
+
+.nav-link.active {
+  @apply text-skin-base duration-500;
+}
+
+.navbar .active-box {
+  @apply absolute bg-skin-activeBox rounded-xl -z-10 transition-[left,top] duration-500;
+}
+
+/* buttons */
+
+/* .btn {
+  @apply max-w-max h-9 flex items-center ring-inset ring-1 ring-zinc-50/5 px-4 rounded-xl gap-2 font-medium text-sm transition-[background-color];
+}
+
+.btn-secondary {
+  @apply bg-zinc-50 text-zinc-900 active:bg-zinc-50/70;
+}
+
+.btn .material-symbols-rounded {
+  @apply text-[18px];
+}
+
+.btn-primary {
+  @apply h-11 bg-sky-400 text-zinc-950 hover:bg-sky-300 active:bg-sky-400 transition-[background-color];
+}
+
+.btn:has(.material-symbols-rounded) {
+  @apply pr-3;
+}
+.settings-bar {
+  @apply absolute right-0 top-full mt-2 mx-2 md:mx-4 bg-zinc-50/10 h-20 rounded-2xl ring-inset ring-1 ring-zinc-50/5 scale-90 isolate blur-sm opacity-0 invisible transition-[transform,opacity,filter];
+}
+
+.settings-bar.active {
+  @apply opacity-100 scale-100 blur-0 visible;
+}
+
+.settings-link {
+  @apply grid items-center h-9 px-4 justify-start text-[17px] text-zinc-50/50 hover:text-zinc-50  transition-colors;
+}
+
+.settings-link.active {
+  @apply text-zinc-900 duration-500;
+} */
+
+.btn {
+  @apply max-w-max h-9 flex items-center ring-inset ring-1 ring-skin-default px-4 rounded-xl gap-2 font-medium text-sm transition-[background-color];
+}
+
+.btn-secondary {
+  @apply bg-skin-btnSecondaryBgColor text-skin-hoverNavLink active:bg-skin-navbarBlur;
+}
+
+.btn .material-symbols-rounded {
+  @apply text-[18px];
+}
+
+.btn-primary {
+  @apply h-11 bg-skin-btnPrimaryBgColor text-skin-hoverNavLink hover:bg-skin-btnPrimaryHoverBgColor active:bg-skin-btnPrimaryBgColor transition-[background-color];
+}
+
+.btn:has(.material-symbols-rounded) {
+  @apply pr-3;
+}
+
+.settings-bar {
+  @apply absolute right-0 top-full mt-2 mx-2 md:mx-4 bg-skin-actionBtn h-20 rounded-2xl ring-inset ring-1 ring-skin-default scale-90 isolate blur-sm opacity-0 invisible transition-[transform,opacity,filter];
+}
+
+.settings-bar.active {
+  @apply opacity-100 scale-100 blur-0 visible;
+}
+
+.settings-link {
+  @apply grid items-center h-9 px-4 justify-start text-[17px] text-skin-settingsLink hover:text-skin-base transition-colors;
+}
+
+.settings-link.active {
+  @apply text-skin-activeSettingsLink duration-500;
+}
+
+/* utility */
+
+/* .material-symbols-rounded {
+  @apply w-[1em] h-[1em] overflow-hidden;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.container {
+  @apply px-4 mx-auto lg:px-8 xl:max-w-6xl;
+}
+
+.img-box {
+  @apply bg-zinc-700 overflow-hidden;
+}
+
+.img-cover {
+  @apply w-full h-full object-cover;
+}
+
+.navbar-logo {
+  @apply bg-zinc-900 object-cover overflow-hidden;
+}
+
+.section {
+  @apply pt-20 lg:pt-32;
+}
+
+
+.headline-1 {
+  background: -webkit-linear-gradient(0deg, #fafafa, #a1a1aa);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.headline-1 {
+  @apply text-4xl leading-tight font-semibold md:text-5xl lg:text-[53px] lg:leading-[1.1.5];
+} */
+
+.material-symbols-rounded {
+  @apply w-[1em] h-[1em] overflow-hidden;
+  font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+}
+
+.container {
+  @apply px-4 mx-auto lg:px-8 xl:max-w-6xl;
+}
+
+.img-box {
+  @apply bg-skin-imgBoxBgColor overflow-hidden;
+}
+
+.img-cover {
+  @apply w-full h-full object-cover;
+}
+
+.navbar-logo {
+  @apply bg-skin-navbarBgColor object-cover overflow-hidden;
+}
+
+.section {
+  @apply pt-20 lg:pt-32;
+}
+
+/* typography */
+
+.headline {
+  /* @apply max-w-max; */
+  background: -webkit-linear-gradient(
+    0deg,
+    var(--gradient-start-color),
+    var(--gradient-end-color)
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.headline-1 {
+  @apply text-4xl leading-tight font-semibold md:text-5xl lg:text-[53px] lg:leading-[1.1.5];
+}
+
+.headline-2 {
+  @apply text-3xl lg:leading-tight lg:text-4xl font-semibold;
+}
+
+.headline-2a {
+  @apply text-2xl lg:leading-tight lg:text-3xl font-semibold;
+}
+
+.title-1 {
+  @apply text-[22px] font-normal;
+}
+
+.label {
+  @apply block text-skin-secondary mb-2 text-sm font-normal;
+}
+
+.text-field {
+  @apply block w-full bg-skin-secondaryBackgroundColor outline-none px-2 py-3 rounded-xl ring-1 ring-inset ring-transparent transition-shadow hover:ring-skin-navbarRing focus:ring-skin-default;
+}
+
+.text-field::placeholder {
+  @apply text-skin-secondary text-sm font-normal tracking-wide;
+}
