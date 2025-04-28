@@ -30,6 +30,7 @@ router.put(
     { name: "bannerUrlFile", maxCount: 1 },
     { name: "availabilityIconUrlFile", maxCount: 1 },
     { name: "aboutMeIconUrlFile", maxCount: 1 },
+    { name: "resume", maxCount: 1 },
   ]),
   updateUser
 ); // Update profile

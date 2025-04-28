@@ -8,6 +8,8 @@ import {
   uploadOnCloudinary,
   deleteFileFromCloudinary,
 } from "../utils/cloudinary.js";
+import { log } from "console";
+import { transporter } from "../utils/nodemailer.js";
 
 const getFilePath = (files, fieldName) => {
   return files && Array.isArray(files[fieldName]) && files[fieldName].length > 0
@@ -15,8 +17,23 @@ const getFilePath = (files, fieldName) => {
     : null;
 };
 
-const uploadIfExists = async (localPath, uploadFn) => {
-  return localPath ? await uploadFn(localPath) : null;
+const uploadAndDeleteIfExists = async (
+  localPath,
+  previousUrl,
+  uploadFn,
+  deleteFn
+) => {
+  let response = null;
+  if (localPath) {
+    response = await uploadFn(localPath);
+    const publicId = previousUrl?.split("/").pop().split(".")[0]; // Extract publicId from URL
+    await deleteFn(publicId);
+    // explicitly commit this lines of code
+    // if (!isImageDeleted) {
+    //   throw new ApiError(500, "Failed to delete image from Cloudinary");
+    // }
+  }
+  return response;
 };
 
 const buildUpdateFields = (uploadsMap) => {
@@ -27,11 +44,11 @@ const buildUpdateFields = (uploadsMap) => {
   return fields;
 };
 
+// to generate access and refresh tokens for user during login
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
     const user = await User.findById(userId);
     const accessToken = user.generateAccessToken();
-    console.log("Success");
 
     const refreshToken = user.generateRefreshToken();
 
@@ -42,7 +59,7 @@ const generateAccessAndRefreshTokens = async (userId) => {
 
     return { accessToken, refreshToken };
   } catch (error) {
-    throw new ApiError(500, "Something went wwrong while generating tokens");
+    throw new ApiError(500, "Something went wrong while generating tokens");
   }
 };
 
@@ -53,9 +70,12 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(400, "All fields are required");
   }
 
-  const existingUser = await User.findOne({ email });
+  const existingUser = await User.findOne({ email, userName });
   if (existingUser) {
-    throw new ApiError(409, "User with this email already exists");
+    throw new ApiError(
+      409,
+      "User with this username and/or email already exists"
+    );
   }
 
   const slug = userName.toLowerCase().replace(/\s+/g, "-");
@@ -83,12 +103,38 @@ const registerUser = asyncHandler(async (req, res) => {
     throw new ApiError(500, "Something went wrong while registering the user");
   }
 
+  // await sendVerifyOtp(user._id);
+
+  const emailOptions = {
+    from: process.env.SMTP_EMAIL,
+    to: email,
+    subject: `🚀 Welcome aboard, ${userName}! Your portfolio journey begins now.`,
+    text: `Hi ${userName}, 👋
+  
+  Welcome to Editable Portfolio – your personal space to create, customize, and showcase your talents to the world.
+  
+  ✨ What's next?
+  Start editing your profile, adding your skills, and building the portfolio that reflects YOU. Everything is customizable – just the way you want it.
+  Your Profile URL: ${process.env.CORS_ORIGIN}/${slug}
+  
+  We're excited to see what you build!
+  
+  Cheers,  
+  The Editable Portfolio Team 💼
+  `,
+  };
+
+  await transporter.sendMail(emailOptions);
+
   return res
     .status(201)
     .json(new ApiResponse(201, createdUser, "User registered successfully"));
 });
 
 const updateUser = asyncHandler(async (req, res) => {
+  const user = req?.user;
+  // console.log(user, "i am user");
+
   const {
     aboutMe,
     skills,
@@ -103,8 +149,7 @@ const updateUser = asyncHandler(async (req, res) => {
     contactLinks,
   } = req.body;
 
-  console.log(skills);
-
+  // to get the file path of the uploaded files that are uploaded by multer to uploading on cloudinary
   const logoUrlLocalPath = getFilePath(req.files, "logoUrlFile");
   const bannerUrlLocalPath = getFilePath(req.files, "bannerUrlFile");
   const availabilityIconUrlLocalPath = getFilePath(
@@ -112,52 +157,58 @@ const updateUser = asyncHandler(async (req, res) => {
     "availabilityIconUrlFile"
   );
   const aboutMeIconUrlLocalPath = getFilePath(req.files, "aboutMeIconUrlFile");
-  // console.log(req.files.bannerUrl[0]);
+  const resumeLocalPath = getFilePath(req.files, "resume");
 
-  // Upload to Cloudinary
+  // Upload to Cloudinary and get response
   const [logoUrl, bannerUrl, availabilityIconUrl, aboutMeIconUrl] =
     await Promise.all([
-      uploadIfExists(logoUrlLocalPath, uploadOnCloudinary),
-      uploadIfExists(bannerUrlLocalPath, uploadOnCloudinary),
-      uploadIfExists(availabilityIconUrlLocalPath, uploadOnCloudinary),
-      uploadIfExists(aboutMeIconUrlLocalPath, uploadOnCloudinary),
+      uploadAndDeleteIfExists(
+        logoUrlLocalPath,
+        user?.logoUrl,
+        uploadOnCloudinary,
+        deleteFileFromCloudinary
+      ),
+      uploadAndDeleteIfExists(
+        bannerUrlLocalPath,
+        user?.bannerUrl,
+        uploadOnCloudinary,
+        deleteFileFromCloudinary
+      ),
+      uploadAndDeleteIfExists(
+        availabilityIconUrlLocalPath,
+        user?.availabilityIconUrl,
+        uploadOnCloudinary,
+        deleteFileFromCloudinary
+      ),
+      uploadAndDeleteIfExists(
+        aboutMeIconUrlLocalPath,
+        user?.aboutMeIconUrl,
+        uploadOnCloudinary,
+        deleteFileFromCloudinary
+      ),
     ]);
-  // console.log(req.files?.bannerUrlFile[0]?.path, "Bro I am files");
-  // console.log(req.files?.logoUrlFile[0]?.path, "Bro I am files");
-  console.log(aboutMe);
 
-  // Create updateFields object with only the fields that were provided
+  log;
+  let resumeUrl = null;
+  if (resumeLocalPath) {
+    resumeUrl = await uploadOnCloudinary(resumeLocalPath, "raw");
+    await deleteFileFromCloudinary(
+      user?.resume.split("/").pop().split(".")[0],
+      "raw"
+    );
+  }
 
+  // to get an object with the urls of these uploaded files on cloudinary / only for whose values exist
   const updateFields = buildUpdateFields({
     logoUrl,
     bannerUrl,
     availabilityIconUrl,
     aboutMeIconUrl,
+    resume: resumeUrl,
   });
 
-  // Create an update object with only the fields that were provided
-
-  // if (userName) {
-  //   updateFields.userName = userName;
-  // Update slug if username changes
-  // updateFields.slug = userName.toLowerCase().replace(/\s+/g, "-");
-
-  // Check if slug already exists for another user
-  //   const slugExists = await User.findOne({
-  //     slug: updateFields.slug,
-  //     _id: { $in: req.user._id },
-  //   });
-
-  //   if (slugExists) {
-  //     throw new ApiError(
-  //       409,
-  //       "Username already taken, please choose a different name"
-  //     );
-  //   }
-  // }
-
   if (aboutMe) updateFields.aboutMe = aboutMe;
-  if (skills) updateFields.skills = skills;
+  if (skills?.length > 0) updateFields.skills = skills;
   if (bannerColor) updateFields.bannerColor = bannerColor;
   if (theme) updateFields.theme = theme;
   if (availabilityHeading)
@@ -188,9 +239,9 @@ const updateUser = asyncHandler(async (req, res) => {
 });
 
 const getCurrentUser = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id)
-    .select("-password -refreshToken")
-    .populate("projects");
+  const user = await User.findById(req.user?._id).select(
+    "-password -refreshToken"
+  );
 
   if (!user) {
     throw new ApiError(404, "User not found");
@@ -199,15 +250,8 @@ const getCurrentUser = asyncHandler(async (req, res) => {
   let userResponse = user.toObject();
   const projects = await Project.find({ owner: user._id }).select("-owner");
   if (projects?.length > 0) {
-    // user.projects = projects;
-    // console.log(projects)
-    // Convert to plain object
     userResponse.projects = projects;
   }
-  console.log(userResponse);
-
-  // Add the projects to the user object before sending response
-  // const userResponse = user.toObject(); // Convert to plain object
 
   return res
     .status(200)
@@ -219,11 +263,13 @@ const getCurrentUser = asyncHandler(async (req, res) => {
 const removeUser = asyncHandler(async (req, res) => {
   await User.findByIdAndDelete(req.user._id);
 
-  await Project.deleteMany({ _id: { $in: req.user.projects } });
+  await Project.deleteMany({ owner: req.user?._id });
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
   };
 
   return res
@@ -260,7 +306,9 @@ const loginUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
   };
 
   return res
@@ -287,7 +335,9 @@ const logoutUser = asyncHandler(async (req, res) => {
 
   const options = {
     httpOnly: true,
-    secure: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+    maxAge: 24 * 60 * 60 * 1000, // 1 day
   };
 
   return res
@@ -299,7 +349,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 
 const getUserBySlug = asyncHandler(async (req, res) => {
   const { slug } = req.params;
-  console.log("what an amazing point");
 
   const user = await User.findOne({ slug }).select("-password -refreshToken");
 
@@ -310,9 +359,6 @@ const getUserBySlug = asyncHandler(async (req, res) => {
   let userResponse = user.toObject();
   const projects = await Project.find({ owner: user._id }).select("-owner");
   if (projects?.length > 0) {
-    // user.projects = projects;
-    // console.log(projects)
-    // Convert to plain object
     userResponse.projects = projects;
   }
 
@@ -323,6 +369,8 @@ const getUserBySlug = asyncHandler(async (req, res) => {
     );
 });
 
+// to refresh the access token using the refresh token
+// this is used when the access token expires
 const refreshAccessToken = asyncHandler(async (req, res) => {
   const incomingRefreshToken =
     req.cookies.refreshToken || req.body.refreshToken;
@@ -349,7 +397,9 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
     const options = {
       httpOnly: true,
-      secure: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 24 * 60 * 60 * 1000, // 1 day
     };
 
     const { accessToken, refreshToken } = await generateAccessAndRefreshTokens(
@@ -372,6 +422,29 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
   }
 });
 
+const sendVerifyOtp = async (userId) => {
+  try {
+    const user = await User.findById(userId);
+    if (!user) {
+      throw new ApiError(404, "User not found");
+    }
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
+    user.verifyOtp = otp;
+    user.verifyOtpExpiry = Date.now() + 10 * 60 * 1000; // 10 minutes
+    await user.save({ validateBeforeSave: false });
+
+    const emailOptions = {
+      from: process.env.SMTP_EMAIL,
+      to: user.email,
+      subject: "Verify your email address",
+      text: `Your OTP for email verification is ${otp}. It is valid for 10 minutes.`,
+    };
+    await transporter.sendMail(emailOptions);
+  } catch (error) {
+    throw new ApiError(500, "Something went wrong while sending OTP");
+  }
+};
+
 export {
   registerUser,
   updateUser,
@@ -381,4 +454,5 @@ export {
   loginUser,
   logoutUser,
   refreshAccessToken,
+  sendVerifyOtp,
 };

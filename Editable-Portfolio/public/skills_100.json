@@ -1,0 +1,848 @@
+[
+  {
+    "id": 1,
+    "label": "React",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
+    "desc": "Frontend Development"
+  },
+  {
+    "id": 2,
+    "label": "Node.js",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg",
+    "desc": "Backend Development"
+  },
+  {
+    "id": 3,
+    "label": "Python",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+    "desc": "Programming"
+  },
+  {
+    "id": 4,
+    "label": "Django",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/75/Django_logo.svg",
+    "desc": "Web Framework"
+  },
+  {
+    "id": 5,
+    "label": "Java",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/en/3/30/Java_programming_language_logo.svg",
+    "desc": "Programming"
+  },
+  {
+    "id": 6,
+    "label": "Kubernetes",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/3/39/Kubernetes_logo_without_workmark.svg",
+    "desc": "DevOps"
+  },
+  {
+    "id": 7,
+    "label": "AWS",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg",
+    "desc": "Cloud Computing"
+  },
+  {
+    "id": 8,
+    "label": "TypeScript",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg",
+    "desc": "Programming"
+  },
+  {
+    "id": 9,
+    "label": "GraphQL",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/1/17/GraphQL_Logo.svg",
+    "desc": "API Technology"
+  },
+  {
+    "id": 10,
+    "label": "Tailwind CSS",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg",
+    "desc": "CSS Framework"
+  },
+  {
+    "id": 11,
+    "label": "AutoCAD",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/d/d7/Autodesk_AutoCAD_logo.svg",
+    "desc": "CAD Software"
+  },
+  {
+    "id": 12,
+    "label": "MATLAB",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/21/Matlab_Logo.png",
+    "desc": "Numerical Computing"
+  },
+  {
+    "id": 13,
+    "label": "SolidWorks",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/4/4c/SolidWorks_Logo.svg",
+    "desc": "3D CAD"
+  },
+  {
+    "id": 14,
+    "label": "ANSYS",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/e/e0/ANSYS_logo.svg",
+    "desc": "Engineering Simulation"
+  },
+  {
+    "id": 15,
+    "label": "Simulink",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/74/Simulink_Logo.svg",
+    "desc": "Model-Based Design"
+  },
+  {
+    "id": 16,
+    "label": "Fusion 360",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/f/f8/Fusion360_Logo.svg",
+    "desc": "3D CAD/CAM"
+  },
+  {
+    "id": 17,
+    "label": "Radiology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Radiology_icon.png",
+    "desc": "Medical Imaging"
+  },
+  {
+    "id": 18,
+    "label": "Cardiology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/4/49/Cardiology_icon.svg",
+    "desc": "Heart Medicine"
+  },
+  {
+    "id": 19,
+    "label": "Phlebotomy",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/e/e1/Phlebotomy_icon.svg",
+    "desc": "Blood Drawing"
+  },
+  {
+    "id": 20,
+    "label": "Pathology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/05/Pathology_icon.svg",
+    "desc": "Disease Diagnosis"
+  },
+  {
+    "id": 21,
+    "label": "Pharmacology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/b/b6/Pharmacology_icon.svg",
+    "desc": "Drug Science"
+  },
+  {
+    "id": 22,
+    "label": "Anatomy",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/24/Human_anatomy_icon.svg",
+    "desc": "Body Structure"
+  },
+  {
+    "id": 23,
+    "label": "Pedagogy",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/89/Pedagogy_icon.svg",
+    "desc": "Teaching Methods"
+  },
+  {
+    "id": 24,
+    "label": "Curriculum Design",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Curriculum_design_icon.svg",
+    "desc": "Educational Planning"
+  },
+  {
+    "id": 25,
+    "label": "Online Teaching",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/57/Online_teaching_icon.svg",
+    "desc": "E-Learning"
+  },
+  {
+    "id": 26,
+    "label": "Special Education",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/08/Special_education_icon.svg",
+    "desc": "Inclusive Learning"
+  },
+  {
+    "id": 27,
+    "label": "EdTech",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/2b/Edtech_icon.svg",
+    "desc": "Education Technology"
+  },
+  {
+    "id": 28,
+    "label": "Marketing",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/02/Marketing_icon.svg",
+    "desc": "Business Strategy"
+  },
+  {
+    "id": 29,
+    "label": "Project Management",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/92/Project_management_icon.svg",
+    "desc": "Organization"
+  },
+  {
+    "id": 30,
+    "label": "Salesforce",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/29/Salesforce_logo.svg",
+    "desc": "CRM Platform"
+  },
+  {
+    "id": 31,
+    "label": "Finance",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Finance_icon.svg",
+    "desc": "Money Management"
+  },
+  {
+    "id": 32,
+    "label": "Accounting",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Accounting_icon.svg",
+    "desc": "Financial Records"
+  },
+  {
+    "id": 33,
+    "label": "Angular",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg",
+    "desc": "Frontend Framework"
+  },
+  {
+    "id": 34,
+    "label": "Vue.js",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/95/Vue.js_Logo_2.svg",
+    "desc": "Frontend Framework"
+  },
+  {
+    "id": 35,
+    "label": "Docker",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Docker_%28container_engine%29_logo.svg",
+    "desc": "Containerization"
+  },
+  {
+    "id": 36,
+    "label": "TensorFlow",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/2d/Tensorflow_logo.svg",
+    "desc": "Machine Learning"
+  },
+  {
+    "id": 37,
+    "label": "PyTorch",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/96/Pytorch_logo.png",
+    "desc": "Deep Learning"
+  },
+  {
+    "id": 38,
+    "label": "Flutter",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Dart-logo.png",
+    "desc": "Mobile Development"
+  },
+  {
+    "id": 39,
+    "label": "Swift",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9d/Swift_logo.svg",
+    "desc": "iOS Development"
+  },
+  {
+    "id": 40,
+    "label": "Kotlin",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/74/Kotlin_Icon.png",
+    "desc": "Android Development"
+  },
+  {
+    "id": 41,
+    "label": "Rust",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Rust_programming_language_black_logo.svg",
+    "desc": "Systems Programming"
+  },
+  {
+    "id": 42,
+    "label": "Go",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/05/Go_Logo_Blue.svg",
+    "desc": "Backend Development"
+  },
+  {
+    "id": 43,
+    "label": "Ruby on Rails",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/62/Ruby_On_Rails_Logo.svg",
+    "desc": "Web Framework"
+  },
+  {
+    "id": 44,
+    "label": "PostgreSQL",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg",
+    "desc": "Database"
+  },
+  {
+    "id": 45,
+    "label": "MongoDB",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/93/MongoDB_Logo.svg",
+    "desc": "NoSQL Database"
+  },
+  {
+    "id": 46,
+    "label": "Redis",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Redis_Logo.svg",
+    "desc": "In-Memory Database"
+  },
+  {
+    "id": 47,
+    "label": "Elasticsearch",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/f/f4/Elasticsearch_logo.svg",
+    "desc": "Search Engine"
+  },
+  {
+    "id": 48,
+    "label": "Apache Kafka",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/05/Apache_kafka.svg",
+    "desc": "Event Streaming"
+  },
+  {
+    "id": 49,
+    "label": "Git",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/e/e0/Git-logo.svg",
+    "desc": "Version Control"
+  },
+  {
+    "id": 50,
+    "label": "Jenkins",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/e/e9/Jenkins_logo.svg",
+    "desc": "CI/CD"
+  },
+  {
+    "id": 51,
+    "label": "Terraform",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/04/Terraform_Logo.svg",
+    "desc": "Infrastructure as Code"
+  },
+  {
+    "id": 52,
+    "label": "Ansible",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/24/Ansible_logo.svg",
+    "desc": "Configuration Management"
+  },
+  {
+    "id": 53,
+    "label": "Prometheus",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/3/38/Prometheus_software_logo.svg",
+    "desc": "Monitoring"
+  },
+  {
+    "id": 54,
+    "label": "Grafana",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/a/a9/Grafana_logo.svg",
+    "desc": "Data Visualization"
+  },
+  {
+    "id": 55,
+    "label": "Splunk",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/3/36/Splunk_logo.svg",
+    "desc": "Log Analysis"
+  },
+  {
+    "id": 56,
+    "label": "Tableau",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/4/4b/Tableau_Logo.png",
+    "desc": "Data Visualization"
+  },
+  {
+    "id": 57,
+    "label": "Power BI",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/c/cf/Power_bi_logo_black.svg",
+    "desc": "Business Analytics"
+  },
+  {
+    "id": 58,
+    "label": "Figma",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
+    "desc": "UI/UX Design"
+  },
+  {
+    "id": 59,
+    "label": "Adobe XD",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/c/c2/Adobe_XD_CC_icon.svg",
+    "desc": "Prototyping"
+  },
+  {
+    "id": 60,
+    "label": "Sketch",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/59/Sketch_Logo.svg",
+    "desc": "Vector Graphics"
+  },
+  {
+    "id": 61,
+    "label": "Blender",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/0c/Blender_logo_no_text.svg",
+    "desc": "3D Modeling"
+  },
+  {
+    "id": 62,
+    "label": "Unity",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/1/19/Unity_Technologies_logo.svg",
+    "desc": "Game Development"
+  },
+  {
+    "id": 63,
+    "label": "Unreal Engine",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/20/Unreal_Engine_Logo.svg",
+    "desc": "Game Development"
+  },
+  {
+    "id": 64,
+    "label": "Photoshop",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/a/af/Adobe_Photoshop_CC_icon.svg",
+    "desc": "Photo Editing"
+  },
+  {
+    "id": 65,
+    "label": "Illustrator",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/f/fb/Adobe_Illustrator_CC_icon.svg",
+    "desc": "Vector Graphics"
+  },
+  {
+    "id": 66,
+    "label": "Premiere Pro",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/4/40/Adobe_Premiere_Pro_CC_icon.svg",
+    "desc": "Video Editing"
+  },
+  {
+    "id": 67,
+    "label": "After Effects",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/c/cb/Adobe_After_Effects_CC_icon.svg",
+    "desc": "Motion Graphics"
+  },
+  {
+    "id": 68,
+    "label": "Autodesk Maya",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/3/3a/Maya_logo_and_wordmark.png",
+    "desc": "3D Animation"
+  },
+  {
+    "id": 69,
+    "label": "Cinema 4D",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Cinema_4D_Logo.png",
+    "desc": "3D Modeling"
+  },
+  {
+    "id": 70,
+    "label": "ZBrush",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6a/ZBrush_logo.png",
+    "desc": "Digital Sculpting"
+  },
+  {
+    "id": 71,
+    "label": "Substance Painter",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9a/Substance_Painter_logo.png",
+    "desc": "3D Texturing"
+  },
+  {
+    "id": 72,
+    "label": "Houdini",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/73/Houdini_logo.png",
+    "desc": "3D Animation"
+  },
+  {
+    "id": 73,
+    "label": "Revit",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/4/44/Autodesk_Revit_icon.png",
+    "desc": "BIM Software"
+  },
+  {
+    "id": 74,
+    "label": "Arduino",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/87/Arduino_Logo.svg",
+    "desc": "Electronics Prototyping"
+  },
+  {
+    "id": 75,
+    "label": "Raspberry Pi",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Raspberry_Pi_Logo.svg",
+    "desc": "Single-Board Computer"
+  },
+  {
+    "id": 76,
+    "label": "LabVIEW",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/2/26/LabVIEW_Logo.png",
+    "desc": "System Design"
+  },
+  {
+    "id": 77,
+    "label": "Solidity",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/05/Solidity_logo.svg",
+    "desc": "Blockchain Development"
+  },
+  {
+    "id": 78,
+    "label": "Ethereum",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Ethereum-icon-purple.svg",
+    "desc": "Blockchain Platform"
+  },
+  {
+    "id": 79,
+    "label": "Hyperledger",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/81/Hyperledger_Logo.svg",
+    "desc": "Enterprise Blockchain"
+  },
+  {
+    "id": 80,
+    "label": "IPFS",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/1/18/Ipfs-logo-1024-ice-text.png",
+    "desc": "Decentralized Storage"
+  },
+  {
+    "id": 81,
+    "label": "Neurosurgery",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Neurosurgery_icon.png",
+    "desc": "Surgical Specialty"
+  },
+  {
+    "id": 82,
+    "label": "Orthopedics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Orthopedics_icon.svg",
+    "desc": "Bone/Muscle Medicine"
+  },
+  {
+    "id": 83,
+    "label": "Pediatrics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/3/3e/Pediatrics_icon.svg",
+    "desc": "Child Healthcare"
+  },
+  {
+    "id": 84,
+    "label": "Dermatology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9b/Dermatology_icon.svg",
+    "desc": "Skin Medicine"
+  },
+  {
+    "id": 85,
+    "label": "Oncology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/4/4a/Oncology_icon.svg",
+    "desc": "Cancer Treatment"
+  },
+  {
+    "id": 86,
+    "label": "Neurology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/1/1e/Neurology_icon.svg",
+    "desc": "Nervous System"
+  },
+  {
+    "id": 87,
+    "label": "Psychiatry",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/66/Psychiatry_icon.svg",
+    "desc": "Mental Health"
+  },
+  {
+    "id": 88,
+    "label": "Anesthesiology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/0d/Anesthesiology_icon.svg",
+    "desc": "Pain Management"
+  },
+  {
+    "id": 89,
+    "label": "Emergency Medicine",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Emergency_medicine_icon.svg",
+    "desc": "Acute Care"
+  },
+  {
+    "id": 90,
+    "label": "Obstetrics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/0b/Obstetrics_icon.svg",
+    "desc": "Pregnancy Care"
+  },
+  {
+    "id": 91,
+    "label": "Gynecology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Gynecology_icon.svg",
+    "desc": "Women's Health"
+  },
+  {
+    "id": 92,
+    "label": "Urology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Urology_icon.svg",
+    "desc": "Urinary System"
+  },
+  {
+    "id": 93,
+    "label": "Ophthalmology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Ophthalmology_icon.svg",
+    "desc": "Eye Care"
+  },
+  {
+    "id": 94,
+    "label": "Otolaryngology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Otolaryngology_icon.svg",
+    "desc": "ENT Specialty"
+  },
+  {
+    "id": 95,
+    "label": "Pulmonology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Pulmonology_icon.svg",
+    "desc": "Lung Health"
+  },
+  {
+    "id": 96,
+    "label": "Endocrinology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Endocrinology_icon.svg",
+    "desc": "Hormone Disorders"
+  },
+  {
+    "id": 97,
+    "label": "Gastroenterology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6f/Gastroenterology_icon.svg",
+    "desc": "Digestive System"
+  },
+  {
+    "id": 98,
+    "label": "Nephrology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Nephrology_icon.svg",
+    "desc": "Kidney Health"
+  },
+  {
+    "id": 99,
+    "label": "Rheumatology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6c/Rheumatology_icon.svg",
+    "desc": "Joint Disorders"
+  },
+  {
+    "id": 100,
+    "label": "Hematology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Hematology_icon.svg",
+    "desc": "Blood Disorders"
+  },
+  {
+    "id": 101,
+    "label": "Infectious Disease",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Infectious_disease_icon.svg",
+    "desc": "Pathogen Treatment"
+  },
+  {
+    "id": 102,
+    "label": "Allergy/Immunology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Allergy_immunology_icon.svg",
+    "desc": "Immune System"
+  },
+  {
+    "id": 103,
+    "label": "Physical Therapy",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Physical_therapy_icon.svg",
+    "desc": "Rehabilitation"
+  },
+  {
+    "id": 104,
+    "label": "Occupational Therapy",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Occupational_therapy_icon.svg",
+    "desc": "Daily Living Skills"
+  },
+  {
+    "id": 105,
+    "label": "Speech Therapy",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Speech_therapy_icon.svg",
+    "desc": "Communication Disorders"
+  },
+  {
+    "id": 106,
+    "label": "Nutrition",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7a/Nutrition_icon.svg",
+    "desc": "Dietary Health"
+  },
+  {
+    "id": 107,
+    "label": "Public Health",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Public_health_icon.svg",
+    "desc": "Community Wellness"
+  },
+  {
+    "id": 108,
+    "label": "Epidemiology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/1/1a/Epidemiology_icon.svg",
+    "desc": "Disease Patterns"
+  },
+  {
+    "id": 109,
+    "label": "Biostatistics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/92/Biostatistics_icon.svg",
+    "desc": "Health Data Analysis"
+  },
+  {
+    "id": 110,
+    "label": "Health Informatics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6e/Health_informatics_icon.svg",
+    "desc": "Medical Data Systems"
+  },
+  {
+    "id": 111,
+    "label": "Medical Coding",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Medical_coding_icon.svg",
+    "desc": "Billing Classification"
+  },
+  {
+    "id": 112,
+    "label": "Forensic Science",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Forensic_science_icon.svg",
+    "desc": "Crime Investigation"
+  },
+  {
+    "id": 113,
+    "label": "Toxicology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Toxicology_icon.svg",
+    "desc": "Poison Effects"
+  },
+  {
+    "id": 114,
+    "label": "Microbiology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Microbiology_icon.svg",
+    "desc": "Microorganism Study"
+  },
+  {
+    "id": 115,
+    "label": "Biochemistry",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Biochemistry_icon.svg",
+    "desc": "Chemical Processes"
+  },
+  {
+    "id": 116,
+    "label": "Genetics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9c/Genetics_icon.svg",
+    "desc": "Heredity Research"
+  },
+  {
+    "id": 117,
+    "label": "Molecular Biology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7f/Molecular_biology_icon.svg",
+    "desc": "Cellular Processes"
+  },
+  {
+    "id": 118,
+    "label": "Immunology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Immunology_icon.svg",
+    "desc": "Immune System"
+  },
+  {
+    "id": 119,
+    "label": "Virology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/3/3d/Virology_icon.svg",
+    "desc": "Virus Study"
+  },
+  {
+    "id": 120,
+    "label": "Parasitology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Parasitology_icon.svg",
+    "desc": "Parasite Study"
+  },
+  {
+    "id": 121,
+    "label": "Histology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Histology_icon.svg",
+    "desc": "Tissue Study"
+  },
+  {
+    "id": 122,
+    "label": "Cytology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8a/Cytology_icon.svg",
+    "desc": "Cell Study"
+  },
+  {
+    "id": 123,
+    "label": "Embryology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/5e/Embryology_icon.svg",
+    "desc": "Developmental Biology"
+  },
+  {
+    "id": 124,
+    "label": "Biotechnology",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Biotechnology_icon.svg",
+    "desc": "Biological Applications"
+  },
+  {
+    "id": 125,
+    "label": "Bioengineering",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Bioengineering_icon.svg",
+    "desc": "Biological Systems"
+  },
+  {
+    "id": 126,
+    "label": "Pharmacogenomics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Pharmacogenomics_icon.svg",
+    "desc": "Drug-Gene Interactions"
+  },
+  {
+    "id": 127,
+    "label": "Proteomics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Proteomics_icon.svg",
+    "desc": "Protein Study"
+  },
+  {
+    "id": 128,
+    "label": "Metabolomics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Metabolomics_icon.svg",
+    "desc": "Metabolite Analysis"
+  },
+  {
+    "id": 129,
+    "label": "Neuroscience",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/7/7d/Neuroscience_icon.svg",
+    "desc": "Nervous System"
+  },
+  {
+    "id": 130,
+    "label": "Cognitive Science",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Cognitive_science_icon.svg",
+    "desc": "Mind Processes"
+  },
+  {
+    "id": 131,
+    "label": "Artificial Intelligence",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6b/Artificial_intelligence_icon.svg",
+    "desc": "Machine Learning"
+  },
+  {
+    "id": 132,
+    "label": "Machine Learning",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Machine_learning_icon.svg",
+    "desc": "Predictive Models"
+  },
+  {
+    "id": 133,
+    "label": "Deep Learning",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/8/8d/Deep_learning_icon.svg",
+    "desc": "Neural Networks"
+  },
+  {
+    "id": 134,
+    "label": "Natural Language Processing",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Natural_language_processing_icon.svg",
+    "desc": "Text Analysis"
+  },
+  {
+    "id": 135,
+    "label": "Computer Vision",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Computer_vision_icon.svg",
+    "desc": "Image Recognition"
+  },
+  {
+    "id": 136,
+    "label": "Robotics",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/6/6d/Robotics_icon.svg",
+    "desc": "Automated Machines"
+  },
+  {
+    "id": 137,
+    "label": "Autonomous Vehicles",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Autonomous_vehicles_icon.svg",
+    "desc": "Self-Driving Cars"
+  },
+  {
+    "id": 138,
+    "label": "Augmented Reality",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Augmented_reality_icon.svg",
+    "desc": "Digital Overlays"
+  },
+  {
+    "id": 139,
+    "label": "Virtual Reality",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Virtual_reality_icon.svg",
+    "desc": "Immersive Environments"
+  },
+  {
+    "id": 140,
+    "label": "Mixed Reality",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Mixed_reality_icon.svg",
+    "desc": "Hybrid Environments"
+  },
+  {
+    "id": 141,
+    "label": "Quantum Computing",
+    "imgSrc": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Quantum_computing_icon.svg",
+    "desc": "Qubit Processing"
+  }
+]

@@ -1,8 +1,32 @@
 import React from "react";
 import useUserContext from "../contexts/UserContext";
+import axios from "axios";
 
-function ProjectCard({ imgSrc, title, tags, id, classes, projectLink }) {
+function ProjectCard({
+  imgSrc,
+  title,
+  tags,
+  id,
+  classes,
+  projectLink,
+  setProject,
+}) {
   const { users, updateUser } = useUserContext();
+  const handleDelete = async () => {
+    try {
+      await axios.delete(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/delete/${id}`,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data", // This is set automatically by FormData
+          },
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div
       className={
@@ -36,19 +60,42 @@ function ProjectCard({ imgSrc, title, tags, id, classes, projectLink }) {
       </div>
 
       {users.isAppEditable ? (
-        <div>
-          <button
-            className="btn-primary btn [&]:max-w-full w-full flex items-center justify-center mt-3"
-            onClick={() =>
-              updateUser(
-                "projects",
-                users.projects.filter((project) => project.url !== projectLink)
-              )
-            }
-          >
-            Delete
-          </button>
-        </div>
+        <>
+          <div>
+            <button
+              className="btn-primary btn [&]:max-w-full w-full flex items-center justify-center mt-3"
+              onClick={() => {
+                updateUser(
+                  "projects",
+                  users.projects.filter((project) => project.title !== title)
+                );
+                setProject({
+                  imgUrl: imgSrc,
+                  title,
+                  keywords: tags,
+                  url: projectLink,
+                  id,
+                });
+              }}
+            >
+              Edit
+            </button>
+          </div>
+          <div>
+            <button
+              className="btn-primary btn [&]:max-w-full w-full flex items-center justify-center mt-3"
+              onClick={() => {
+                updateUser(
+                  "projects",
+                  users.projects.filter((project) => project.title !== title)
+                );
+                handleDelete();
+              }}
+            >
+              Delete
+            </button>
+          </div>
+        </>
       ) : (
         <a href={projectLink} target="_blank" className="absolute inset-0"></a>
       )}

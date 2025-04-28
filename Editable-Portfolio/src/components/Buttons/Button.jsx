@@ -1,16 +1,27 @@
-function ButtonPrimary({ href, target = "_self", label, icon, classes }) {
+function ButtonPrimary({
+  href,
+  target = "_self",
+  label,
+  icon,
+  classes,
+  ...probs
+}) {
   if (href) {
     return (
-      <a href={href} target={target} className={"btn btn-primary " + classes}>
+      <a
+        href={href}
+        target={target}
+        className={"btn btn-primary " + classes}
+        {...probs}
+      >
         {label}
 
         {icon && (
-        <span className="material-symbols-rounded" aria-hidden="true">
-          {icon}
-         {console.log(icon)} 
-          
-        </span>
-      )}
+          <span className="material-symbols-rounded" aria-hidden="true">
+            {icon}
+            {console.log(icon)}
+          </span>
+        )}
       </a>
     );
   } else {

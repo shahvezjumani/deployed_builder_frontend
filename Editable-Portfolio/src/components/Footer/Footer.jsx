@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ButtonPrimary from "../Buttons/Button";
 import useUserContext from "../contexts/UserContext";
 import axios from "axios";
@@ -7,6 +7,7 @@ export default function Footer() {
   const { users, updateUser } = useUserContext();
   const [response, setResponse] = React.useState(null);
   const [error, setError] = React.useState(null);
+  const [showPopUp, setShowPopUp] = useState(false);
   console.log(users);
 
   const handleSave = async () => {
@@ -36,40 +37,40 @@ export default function Footer() {
         }
       );
 
-      for (const project of projects) {
-        const formData = new FormData();
+      // for (const project of projects) {
+      //   const formData = new FormData();
 
-        // Add text fields to form data
-        formData.append("title", project.title);
+      //   // Add text fields to form data
+      //   formData.append("title", project.title);
 
-        // Handle keywords array
-        if (Array.isArray(project.keywords)) {
-          project.keywords.forEach((keyword) => {
-            formData.append("keywords", keyword);
-          });
-        }
+      //   // Handle keywords array
+      //   if (Array.isArray(project.keywords)) {
+      //     project.keywords.forEach((keyword) => {
+      //       formData.append("keywords", keyword);
+      //     });
+      //   }
 
-        if (project.url) formData.append("url", project.url);
+      //   if (project.url) formData.append("url", project.url);
 
-        // Add file to form data if it exists
-        if (project.imgUrlFile) {
-          console.log(project.imgUrlFile);
+      //   // Add file to form data if it exists
+      //   if (project.imgUrlFile) {
+      //     console.log(project.imgUrlFile);
 
-          formData.append("imgUrlFile", project.imgUrlFile);
-        }
+      //     formData.append("imgUrlFile", project.imgUrlFile);
+      //   }
 
-        // Send the properly formatted FormData
-        await axios.post(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/create-project`,
-          formData,
-          {
-            withCredentials: true,
-            headers: {
-              "Content-Type": "multipart/form-data", // This is set automatically by FormData
-            },
-          }
-        );
-      }
+      //   // Send the properly formatted FormData
+      //   await axios.post(
+      //     `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/create-project`,
+      //     formData,
+      //     {
+      //       withCredentials: true,
+      //       headers: {
+      //         "Content-Type": "multipart/form-data", // This is set automatically by FormData
+      //       },
+      //     }
+      //   );
+      // }
       setResponse(response.data);
       setError(null);
     } catch (err) {
@@ -88,6 +89,19 @@ export default function Footer() {
       setResponse(null);
     }
   };
+
+  useEffect(() => {
+    if (response) {
+      setShowPopUp(true);
+    }
+    const timer = setTimeout(() => {
+      setShowPopUp(false);
+    }, 700);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [response]);
 
   const sitemap = [
     { id: 1, label: "Home", href: "#home" },
@@ -181,6 +195,11 @@ export default function Footer() {
           </div>
         )}
       </div>
+      {showPopUp && (
+        <p className="fixed bottom-4 right-4 bg-green-600 text-white text-lg px-4 py-2 rounded-xl shadow-lg z-30 transition-all duration-300">
+          Successfully updated
+        </p>
+      )}
     </footer>
   );
 }

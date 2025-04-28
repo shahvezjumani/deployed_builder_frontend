@@ -106,6 +106,31 @@ const userSchema = new Schema(
       },
       instagram: { type: String, default: "/" },
     },
+    resume: {
+      type: String,
+      default:
+        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1745059595/Shahvez_Jumani_Resume_ubmh2l.pdf",
+    },
+    verifyOtp: {
+      type: String,
+      default: "",
+    },
+    verifyOtpExpiry: {
+      type: Date,
+      default: Date.now,
+    },
+    isVerfied: {
+      type: Boolean,
+      default: false,
+    },
+    resetOtp: {
+      type: String,
+      default: "",
+    },
+    resetOtpExpiry: {
+      type: Date,
+      default: Date.now,
+    },
     refreshToken: {
       type: String,
     },
@@ -148,4 +173,4 @@ userSchema.methods.generateRefreshToken = function () {
   );
 };
 
-export const User = mongoose.model("User", userSchema);
+export const User = mongoose.models.User || mongoose.model("User", userSchema);

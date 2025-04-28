@@ -28,7 +28,7 @@ const router = createBrowserRouter(
 createRoot(document.getElementById("root")).render(
   <StrictMode>
     <UserAuthProvider>
-      <RouterProvider router={router}>{/* <App /> */}</RouterProvider>
+      <RouterProvider router={router}></RouterProvider>
     </UserAuthProvider>
   </StrictMode>
 );

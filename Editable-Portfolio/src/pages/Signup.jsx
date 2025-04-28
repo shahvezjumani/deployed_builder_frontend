@@ -1,5 +1,4 @@
-import React from "react";
-import SignupComponent from "../components/SignupComponent";
+import { SignupComponent } from "../components";
 
 const Signup = () => {
   return <SignupComponent />;

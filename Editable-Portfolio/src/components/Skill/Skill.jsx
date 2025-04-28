@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import SkillCard from "./SkillCard";
 
 import { useState } from "react";
@@ -6,147 +6,156 @@ import useUserContext from "../contexts/UserContext";
 
 function Skill() {
   const [searchTerm, setSearchTerm] = useState(""); // State for the search input
+  const [skillItem, setSkillItem] = useState([]);
 
   const { users, updateUser } = useUserContext();
-  const skillItem = [
-    {
-      id: 1,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
-      label: "Figma",
-      desc: "Design tool",
-    },
-    {
-      id: 2,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg",
-      label: "CSS",
-      desc: "User Interface",
-    },
-    {
-      id: 3,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png",
-      label: "JavaScript",
-      desc: "Interaction",
-    },
-    {
-      id: 4,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg",
-      label: "NodeJS",
-      desc: "Web Server",
-    },
-    {
-      id: 5,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png",
-      label: "ExpressJS",
-      desc: "Node Framework",
-    },
-    {
-      id: 6,
-      imgSrc: "https://upload.wikimedia.org/wikipedia/en/4/45/MongoDB-Logo.svg",
-      label: "MongoDB",
-      desc: "Database",
-    },
-    {
-      id: 7,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
-      label: "React",
-      desc: "Framework",
-    },
-    {
-      id: 8,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg",
-      label: "TailwindCSS",
-      desc: "User Interface",
-    },
-    {
-      id: 9,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg",
-      label: "Git",
-      desc: "Version Control",
-    },
-    {
-      id: 10,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
-      label: "GitHub",
-      desc: "Code Hosting",
-    },
-    {
-      id: 11,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/4/4e/Docker_%28container_engine%29_logo.svg",
-      label: "Docker",
-      desc: "Containerization",
-    },
-    {
-      id: 12,
-      imgSrc: "https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png",
-      label: "Redux",
-      desc: "State Management",
-    },
-    {
-      id: 13,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
-      label: "Python",
-      desc: "Programming Language",
-    },
-    {
-      id: 14,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg",
-      label: "TypeScript",
-      desc: "Typed JavaScript",
-    },
-    {
-      id: 15,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg",
-      label: "Angular",
-      desc: "Frontend Framework",
-    },
-    {
-      id: 16,
-      imgSrc: "https://upload.wikimedia.org/wikipedia/commons/9/91/Webpack.svg",
-      label: "Webpack",
-      desc: "Module Bundler",
-    },
-    {
-      id: 17,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/0/0e/SQL_Database_Logo.svg",
-      label: "MySQL",
-      desc: "Relational Database",
-    },
-    {
-      id: 18,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg",
-      label: "Bootstrap",
-      desc: "CSS Framework",
-    },
-    {
-      id: 19,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/f/fd/Jest_logo.svg",
-      label: "Jest",
-      desc: "Testing Framework",
-    },
-    {
-      id: 20,
-      imgSrc:
-        "https://upload.wikimedia.org/wikipedia/commons/1/17/GraphQL_Logo.svg",
-      label: "GraphQL",
-      desc: "API Query Language",
-    },
-  ];
+  useEffect(() => {
+    fetch("/skills_100.json")
+      .then((res) => res.json())
+      .then((data) => {
+        setSkillItem(data);
+        console.log(skillItem);
+      });
+  }, []);
+  // const skillItem = [
+  //   {
+  //     id: 1,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/3/33/Figma-logo.svg",
+  //     label: "Figma",
+  //     desc: "Design tool",
+  //   },
+  //   {
+  //     id: 2,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/d/d5/CSS3_logo_and_wordmark.svg",
+  //     label: "CSS",
+  //     desc: "User Interface",
+  //   },
+  //   {
+  //     id: 3,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/6/6a/JavaScript-logo.png",
+  //     label: "JavaScript",
+  //     desc: "Interaction",
+  //   },
+  //   {
+  //     id: 4,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg",
+  //     label: "NodeJS",
+  //     desc: "Web Server",
+  //   },
+  //   {
+  //     id: 5,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/6/64/Expressjs.png",
+  //     label: "ExpressJS",
+  //     desc: "Node Framework",
+  //   },
+  //   {
+  //     id: 6,
+  //     imgSrc: "https://upload.wikimedia.org/wikipedia/en/4/45/MongoDB-Logo.svg",
+  //     label: "MongoDB",
+  //     desc: "Database",
+  //   },
+  //   {
+  //     id: 7,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg",
+  //     label: "React",
+  //     desc: "Framework",
+  //   },
+  //   {
+  //     id: 8,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/d/d5/Tailwind_CSS_Logo.svg",
+  //     label: "TailwindCSS",
+  //     desc: "User Interface",
+  //   },
+  //   {
+  //     id: 9,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/3/3f/Git_icon.svg",
+  //     label: "Git",
+  //     desc: "Version Control",
+  //   },
+  //   {
+  //     id: 10,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/9/91/Octicons-mark-github.svg",
+  //     label: "GitHub",
+  //     desc: "Code Hosting",
+  //   },
+  //   {
+  //     id: 11,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/4/4e/Docker_%28container_engine%29_logo.svg",
+  //     label: "Docker",
+  //     desc: "Containerization",
+  //   },
+  //   {
+  //     id: 12,
+  //     imgSrc: "https://upload.wikimedia.org/wikipedia/commons/4/49/Redux.png",
+  //     label: "Redux",
+  //     desc: "State Management",
+  //   },
+  //   {
+  //     id: 13,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/c/c3/Python-logo-notext.svg",
+  //     label: "Python",
+  //     desc: "Programming Language",
+  //   },
+  //   {
+  //     id: 14,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/4/4c/Typescript_logo_2020.svg",
+  //     label: "TypeScript",
+  //     desc: "Typed JavaScript",
+  //   },
+  //   {
+  //     id: 15,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/c/cf/Angular_full_color_logo.svg",
+  //     label: "Angular",
+  //     desc: "Frontend Framework",
+  //   },
+  //   {
+  //     id: 16,
+  //     imgSrc: "https://upload.wikimedia.org/wikipedia/commons/9/91/Webpack.svg",
+  //     label: "Webpack",
+  //     desc: "Module Bundler",
+  //   },
+  //   {
+  //     id: 17,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/0/0e/SQL_Database_Logo.svg",
+  //     label: "MySQL",
+  //     desc: "Relational Database",
+  //   },
+  //   {
+  //     id: 18,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/b/b2/Bootstrap_logo.svg",
+  //     label: "Bootstrap",
+  //     desc: "CSS Framework",
+  //   },
+  //   {
+  //     id: 19,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/f/fd/Jest_logo.svg",
+  //     label: "Jest",
+  //     desc: "Testing Framework",
+  //   },
+  //   {
+  //     id: 20,
+  //     imgSrc:
+  //       "https://upload.wikimedia.org/wikipedia/commons/1/17/GraphQL_Logo.svg",
+  //     label: "GraphQL",
+  //     desc: "API Query Language",
+  //   },
+  // ];
 
   const filteredSkills = skillItem.filter((skill) =>
     skill.label.toLowerCase().includes(searchTerm.toLowerCase())

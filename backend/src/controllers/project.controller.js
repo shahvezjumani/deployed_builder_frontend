@@ -1,3 +1,4 @@
+import mongoose from "mongoose";
 import { Project } from "../models/project.model.js";
 import { ApiError } from "../utils/ApiError.js";
 import { ApiResponse } from "../utils/ApiResponse.js";
@@ -11,12 +12,11 @@ const createProject = asyncHandler(async (req, res) => {
   const user = req.user?._id;
   const { title, keywords, url } = req.body;
 
-  // Check if required fields are provided
   if (!title) {
     throw new ApiError(400, "Title is required");
   }
 
-  const hasAlready = await Project.findOne({ title });
+  const hasAlready = await Project.findOne({ title, owner: user });
   if (hasAlready) {
     throw new ApiError(400, "Project has already exists");
   }
@@ -36,7 +36,6 @@ const createProject = asyncHandler(async (req, res) => {
     );
   }
 
-  // Create project
   const project = await Project.create({
     title,
     keywords: keywords || [],
@@ -56,17 +55,20 @@ const createProject = asyncHandler(async (req, res) => {
 
 const deleteProject = asyncHandler(async (req, res) => {
   const user = req.user?._id;
-  const { projectId } = req.params;
+  const { id } = req.params;
 
-  if (!projectId) {
-    throw new ApiError(400, "Project ID is required");
+  if (!mongoose.Types.ObjectId.isValid(id)) {
+    throw new ApiError(400, "Invalid project ID");
   }
 
-  const project = await Project.findById(projectId);
+  const project = await Project.findById(id);
+  if (!project) {
+    throw new ApiError(404, "Project not found");
+  }
+  console.log(project, "project");
 
-  // Find and delete the project only if the user is the owner
   const deletedProject = await Project.findOneAndDelete({
-    _id: projectId,
+    _id: id,
     owner: user,
   });
 
@@ -89,4 +91,41 @@ const deleteProject = asyncHandler(async (req, res) => {
     .json(new ApiResponse(200, {}, "Project deleted successfully"));
 });
 
-export { createProject, deleteProject };
+const updateProject = asyncHandler(async (req, res) => {
+  const user = req.user?._id;
+  const { title, keywords, url } = req.body;
+  const { id: projectId } = req.params;
+  const imgUrlLocalPath = req.file?.path;
+
+  const project = await Project.findById(projectId);
+  if (!project) {
+    throw new ApiError(404, "Project not found");
+  }
+  if (project.owner.toString() !== user.toString()) {
+    throw new ApiError(403, "You don't have permission to update this project");
+  }
+
+  let imgUrl;
+  if (imgUrlLocalPath) {
+    imgUrl = await uploadOnCloudinary(imgUrlLocalPath);
+    const publicId = project?.imgUrl?.split("/").pop().split(".")[0]; // Extract publicId from URL
+
+    const isImageDeleted = await deleteFileFromCloudinary(publicId);
+    if (!isImageDeleted) {
+      throw new ApiError(500, "Failed to delete image from Cloudinary");
+    }
+  }
+
+  await Project.findByIdAndUpdate(
+    projectId,
+    {
+      title: title || project.title,
+      keywords: keywords || project.keywords,
+      url: url || project.url,
+      imgUrl: imgUrl?.url || project.imgUrl,
+    },
+    { new: true }
+  );
+});
+
+export { createProject, deleteProject, updateProject };

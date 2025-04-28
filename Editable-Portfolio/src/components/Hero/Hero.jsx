@@ -9,6 +9,7 @@ function Hero() {
   // );
   const [color, setColor] = useState("#38bdf8");
   const { users, updateUser } = useUserContext();
+  console.log("banner", users.bannerUrl);
 
   // const handleFileChange = (event) => {
   //   const file = event.target.files[0];
@@ -136,14 +137,39 @@ function Hero() {
         placeholder="Start typing..."
       /> */}
             {/* </h2> */}
-
-            <div className="flex items-center gap-3">
-              <ButtonPrimary
-                label="Download CV"
-                icon="download"
-                href={"/resume.pdf"}
-              />
-            </div>
+            {users.isAppEditable ? (
+              <div className="flex items-center gap-3">
+                {/* <ButtonPrimary
+                  label="Download CV"
+                  icon="download"
+                  href={"/resume.pdf"}
+                /> */}
+                <button className="">
+                  <input
+                    type="file"
+                    onChange={(e) => updateUser("resume", e.target.files[0])}
+                  />
+                </button>
+              </div>
+            ) : (
+              <div className="flex items-center gap-3">
+                <ButtonPrimary
+                  label="Download CV"
+                  icon="download"
+                  href={`${users.resume.replace(
+                    "/upload/",
+                    "/upload/fl_attachment/"
+                  )}`}
+                  download={"download"}
+                />
+                {/* <a
+                  href={}
+                  download
+                >
+                  Download Resume
+                </a> */}
+              </div>
+            )}
           </div>
           <div className="hidden lg:block">
             <input

@@ -7,8 +7,13 @@ import useUserAuthContext from "./contexts/userAuthContext";
 // import { UserAuthContext } from "./contexts/userAuthProvider";
 
 const LoginComponent = () => {
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  // const emailRef = useRef(null);
+  // const passwordRef = useRef(null);
+  const inputRefs = useRef({
+    email: null,
+    password: null,
+  });
+
   const navigate = useNavigate();
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
@@ -30,15 +35,15 @@ const LoginComponent = () => {
 
   const handleOnClick = async (e) => {
     e.preventDefault();
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    console.log("Email:", email, "Password:", password);
+    const email = inputRefs.current.email.value;
+    const password = inputRefs.current.password.value;
+
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
         { email, password },
         {
-          withCredentials: true, // Send cookies if using sessions
+          withCredentials: true,
           headers: {
             "Content-Type": "application/json",
           },
@@ -47,25 +52,9 @@ const LoginComponent = () => {
       setResponse(response.data);
       setError(null);
       login();
-
-      // dispatch(authLogin(response.data.data));
-      // console.log(response.data.data.user);
-
-      // updateUserProfile(response.data.data.user);
       navigate("/profile/home");
-      //   setFormData({ email: "", password: "" });
     } catch (err) {
-      let errorMessage = "Something went wrong Shahvez";
-      if (err.response?.data) {
-        // Try to extract the error message from the HTML response
-        const match = err.response.data.match(/<pre>(.*?)<\/pre>/);
-
-        if (match && match[1]) {
-          errorMessage = match[1].trim().replace("Error: ", "");
-        }
-      }
-
-      setError(errorMessage);
+      setError(err.response?.data?.message || "Something went wrong");
       setShowErrorPopup(true);
       setResponse(null);
     }
@@ -73,6 +62,7 @@ const LoginComponent = () => {
 
   return (
     <div className="flex h-screen w-full bg-zinc-900 relative">
+      
       {/* Error Popup */}
       {showErrorPopup && (
         <div className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center">
@@ -110,6 +100,7 @@ const LoginComponent = () => {
           <h2 className="text-3xl font-semibold text-zinc-200 text-center mb-6">
             Login
           </h2>
+
           <form onSubmit={(e) => handleOnClick(e)}>
             <div className="mb-4">
               <Input
@@ -117,7 +108,7 @@ const LoginComponent = () => {
                 className={`w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500`}
                 placeholder="Enter your email"
                 label="Email"
-                ref={emailRef}
+                ref={(emailRef) => (inputRefs.current.email = emailRef)}
                 required
               />
             </div>
@@ -127,7 +118,9 @@ const LoginComponent = () => {
                 className={`w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500`}
                 placeholder="Enter your password"
                 label="Password"
-                ref={passwordRef}
+                ref={(passwordRef) =>
+                  (inputRefs.current.password = passwordRef)
+                }
                 required
               />
             </div>
@@ -150,6 +143,7 @@ const LoginComponent = () => {
               </p>
             </div>
           </form>
+
         </div>
       </div>
     </div>

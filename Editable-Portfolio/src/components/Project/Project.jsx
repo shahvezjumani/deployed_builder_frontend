@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import ProjectCard from "./ProjectCard";
 import useUserContext from "../contexts/UserContext";
 import EditableProjectCard from "./EditableProjectCard";
@@ -49,6 +49,9 @@ function Project() {
     //   projectLink: 'https://github.com/codewithsadee/vcard-personal-portfolio'
     // },
   ];
+  const [project, setProject] = useState(null);
+  console.log(project);
+
   return (
     <section id="work" className="section">
       <div className="container">
@@ -57,7 +60,7 @@ function Project() {
 
           {users.isAppEditable && (
             <div className="grid gap-x-4 gap-y-5 grid-cols-1 max-w-[352px] justify-self-center mt-8 mb-4">
-              <EditableProjectCard />
+              <EditableProjectCard projectToUpdate={project} />
             </div>
             // <ProjectCard
             //   imgSrc="/images/check_4824138.png"
@@ -72,11 +75,13 @@ function Project() {
               users.projects.map((project, index) => (
                 <ProjectCard
                   key={index}
+                  id={project._id}
                   imgSrc={project.imgUrl}
                   title={project.title}
                   tags={project.keywords}
                   // id={id}
                   projectLink={project.url}
+                  setProject={setProject}
                 />
               ))}
           </div>

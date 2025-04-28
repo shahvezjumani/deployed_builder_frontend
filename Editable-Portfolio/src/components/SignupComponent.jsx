@@ -6,9 +6,11 @@ import { useEffect } from "react";
 
 const SignupComponent = () => {
   const navigate = useNavigate();
-  const usernameRef = useRef(null);
-  const emailRef = useRef(null);
-  const passwordRef = useRef(null);
+  const inputRefs = useRef({
+    userName: null,
+    email: null,
+    password: null,
+  });
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
@@ -17,7 +19,6 @@ const SignupComponent = () => {
   useEffect(() => {
     if (error) {
       setShowErrorPopup(true);
-
       const timer = setTimeout(() => {
         setShowErrorPopup(false);
         setError(null);
@@ -26,54 +27,35 @@ const SignupComponent = () => {
       return () => clearTimeout(timer);
     }
   }, [error]);
+  
   const handleOnSubmit = async (e) => {
     e.preventDefault();
 
-    console.log("Form submitted!");
-    const userName = usernameRef.current.value;
-    const email = emailRef.current.value;
-    const password = passwordRef.current.value;
-    console.log("Username:", userName, "Email:", email, "Password:", password);
+    const email = inputRefs.current.email.value;
+    const userName = inputRefs.current.userName.value;
+    const password = inputRefs.current.password.value;
 
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`,
         { userName, email, password },
         {
-          withCredentials: true, // Send cookies if using sessions
+          withCredentials: true,
           headers: {
             "Content-Type": "application/json",
           },
         }
       );
       setResponse(response.data);
-      // console.log(response.data.data);
-      console.log(response.data.data.slug);
-
       setError(null);
       alert(
         `Your Profile URL is : "http://localhost:5173/
-        ${response.data.data.slug}"`
+        ${response.data?.data?.slug}"`
       );
-      // dispatch(authLogin(response.data.data));
       navigate("/");
-      //   setFormData({ email: "", password: "" });
     } catch (err) {
-      let errorMessage = "Something went wrong Shahvez";
-      if (err.response?.data) {
-        // console.log("error", err);
-        // console.log("error response", err.response);
-
-        // Try to extract the error message from the HTML response
-        const match = err.response.data.match(/<pre>(.*?)<\/pre>/);
-        // console.log(match[1].replace("Error: ",""));
-
-        if (match && match[1]) {
-          errorMessage = match[1].trim().replace("Error: ", "");
-        }
-      }
-
-      setError(errorMessage);
+      setShowErrorPopup(true);
+      setError(err.response?.data?.message || "Something went wrong");
       setResponse(null);
     }
   };
@@ -104,76 +86,46 @@ const SignupComponent = () => {
           </button>
         </div>
       )}
-      {/* Left Side - Signup Form (Always Visible) */}
+
       <div className="w-full md:w-1/2 flex justify-center items-center p-6">
         <div className="bg-zinc-800/60 backdrop-blur-lg p-10 rounded-xl shadow-2xl w-full max-w-md">
           <h2 className="text-3xl font-semibold text-zinc-200 text-center mb-6">
             Create an Account
           </h2>
+
           <form onSubmit={(e) => handleOnSubmit(e)}>
             <div className="mb-4">
-              {/* <label className="block text-zinc-300 text-sm font-semibold mb-2">
-                Username
-              </label>
-              <input
-                type="text"
-                className="w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500"
-                placeholder="Enter your username"
-              /> */}
               <Input
                 type={"text"}
                 className={`w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500`}
                 placeholder="Enter your username"
                 label="Username"
-                // required
-                ref={usernameRef}
+                required
+                ref={(userNameRef) =>
+                  (inputRefs.current.userName = userNameRef)
+                }
               />
             </div>
-            {/* <div className="mb-4">
-              <Input
-                type={"text"}
-                className={`w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500`}
-                placeholder="Enter your slug"
-                label="slug"
-                // required
-                ref={usernameRef}
-              />
-            </div> */}
-
             <div className="mb-4">
-              {/* <label className="block text-zinc-300 text-sm font-semibold mb-2">
-                Email
-              </label>
-              <input
-                type="email"
-                className="w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500"
-                placeholder="Enter your email"
-              /> */}
               <Input
                 type={"email"}
                 className={`w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500`}
                 placeholder="Enter your email"
                 label="Email"
                 required
-                ref={emailRef}
+                ref={(emailRef) => (inputRefs.current.email = emailRef)}
               />
             </div>
             <div className="mb-6">
-              {/* <label className="block text-zinc-300 text-sm font-semibold mb-2">
-                Password
-              </label>
-              <input
-                type="password"
-                className="w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500"
-                placeholder="Enter your password"
-              /> */}
               <Input
                 type={"password"}
                 className={`w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500`}
                 placeholder="Enter your password"
                 label="Password"
                 required
-                ref={passwordRef}
+                ref={(passwordRef) =>
+                  (inputRefs.current.password = passwordRef)
+                }
               />
             </div>
             <button
@@ -186,7 +138,6 @@ const SignupComponent = () => {
         </div>
       </div>
 
-      {/* Right Side - AI Image (Hidden on Mobile) */}
       <div className="hidden md:flex w-1/2 h-full justify-center items-center">
         <img
           className="w-[55%] h-auto object-cover rounded-xl shadow-lg"

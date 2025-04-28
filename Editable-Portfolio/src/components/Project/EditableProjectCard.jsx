@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useUserContext from "../contexts/UserContext";
 import { useRef } from "react";
 import axios from "axios";
 
-function EditableProjectCard() {
+function EditableProjectCard({ projectToUpdate }) {
   const { users, updateUser } = useUserContext();
   const [project, setProject] = useState({
     imgUrl: "/images/check_4824138.png",
@@ -15,6 +15,12 @@ function EditableProjectCard() {
   const [keyword, setKeyword] = useState();
 
   const name = useRef();
+
+  useEffect(() => {
+    if (projectToUpdate) {
+      setProject({ ...projectToUpdate, edit: true });
+    }
+  }, [projectToUpdate]);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
@@ -39,23 +45,62 @@ function EditableProjectCard() {
     setProject((prev) => ({ ...prev, [name.current]: value }));
   };
 
-  // const handleSave = async () => {
-  //   const { imgUrl, remainingProject } = project;
-  //   try {
-  //     const response = await axios.post(
-  //       `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/create-project`,
-  //       remainingProject,
-  //       {
-  //         withCredentials: true,
-  //         headers: {
-  //           "Content-Type": "multipart/form-data",
-  //         },
-  //       }
-  //     );
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
+  const handleSave = async () => {
+    const { imgUrl, ...remainingProject } = project;
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/create-project`,
+        remainingProject,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setProject((prev) => ({
+        ...prev,
+        imgUrl: "/images/check_4824138.png",
+        title: "Your Project Title",
+        keywords: [],
+        url: "",
+        imgUrlFile: "",
+      }));
+      setKeyword("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleUpdateProject = async () => {
+    const { imgUrl, ...remainingProject } = project;
+    try {
+      const response = await axios.put(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/update-project/${
+          project.id
+        }`,
+        remainingProject,
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      setProject((prev) => ({
+        ...prev,
+        imgUrl: "/images/check_4824138.png",
+        title: "Your Project Title",
+        keywords: [],
+        url: "",
+        imgUrlFile: "",
+        edit: false,
+      }));
+      setKeyword("");
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <div
       className={
@@ -181,13 +226,18 @@ function EditableProjectCard() {
       <div className="flex gap-2 items-center justify-between">
         <button
           className="btn btn-primary [&]:max-w-full w-full flex items-center justify-center"
-          onClick={() =>
-            users.projects.find((f) => f.url === project.url)
+          onClick={() => {
+            users.projects.find((f) => f.title === project.title)
               ? updateUser("projects", [...users.projects])
-              : updateUser("projects", [...users.projects, { ...project }])
-          }
+              : updateUser("projects", [...users.projects, { ...project }]);
+            if (project?.edit) {
+              handleUpdateProject();
+            } else {
+              handleSave();
+            }
+          }}
         >
-          Save
+          {project?.edit ? "Update" : "Save"}
         </button>
       </div>
     </div>

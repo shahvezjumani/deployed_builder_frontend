@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
 import cookieparser from "cookie-parser";
+import { errorHandler } from "./utils/errorHandler.js";
 const app = express();
 
 app.use(
@@ -35,7 +36,12 @@ app.use(cookieparser());
 
 import userRouter from "./routes/user.route.js";
 import projectRouter from "./routes/project.route.js";
+
 app.use("/api/v1/user", userRouter);
 app.use("/api/v1/project", projectRouter);
+// app.all("*", (req, res, next) => {
+//   next(new ApiError(404, `Route ${req.originalUrl} not found`));
+// });
+app.use(errorHandler);
 
 export default app;

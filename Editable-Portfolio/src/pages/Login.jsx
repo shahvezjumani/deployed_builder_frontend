@@ -1,6 +1,4 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import LoginComponent from "../components/LoginComponent";
+import { LoginComponent } from "../components";
 
 const Login = () => {
   return <LoginComponent />;
