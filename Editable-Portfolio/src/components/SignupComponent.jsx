@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
 import axios from "axios";
@@ -6,14 +6,16 @@ import { useEffect } from "react";
 
 const SignupComponent = () => {
   const navigate = useNavigate();
-  const inputRefs = useRef({
-    userName: null,
-    email: null,
-    password: null,
+  const [formData, setFormData] = useState({
+    userName: "",
+    email: "",
+    password: "",
   });
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
 
   // Close error popup after a delay
   useEffect(() => {
@@ -27,18 +29,34 @@ const SignupComponent = () => {
       return () => clearTimeout(timer);
     }
   }, [error]);
-  
-  const handleOnSubmit = async (e) => {
+
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
-    const email = inputRefs.current.email.value;
-    const userName = inputRefs.current.userName.value;
-    const password = inputRefs.current.password.value;
+    let valid = true;
+
+    // Email validation
+    if (!formData.email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+      setEmailError("Please enter a valid email address.");
+      valid = false;
+    } else {
+      setEmailError("");
+    }
+
+    // Password validation
+    if (formData.password.length < 6) {
+      setPasswordError("Password must be at least 6 characters.");
+      valid = false;
+    } else {
+      setPasswordError("");
+    }
+
+    if (!valid) return;
 
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`,
-        { userName, email, password },
+        formData,
         {
           withCredentials: true,
           headers: {
@@ -93,7 +111,7 @@ const SignupComponent = () => {
             Create an Account
           </h2>
 
-          <form onSubmit={(e) => handleOnSubmit(e)}>
+          <form onSubmit={(e) => handleFormSubmit(e)}>
             <div className="mb-4">
               <Input
                 type={"text"}
@@ -101,8 +119,8 @@ const SignupComponent = () => {
                 placeholder="Enter your username"
                 label="Username"
                 required
-                ref={(userNameRef) =>
-                  (inputRefs.current.userName = userNameRef)
+                onChange={(e) =>
+                  setFormData({ ...formData, userName: e.target.value })
                 }
               />
             </div>
@@ -113,8 +131,13 @@ const SignupComponent = () => {
                 placeholder="Enter your email"
                 label="Email"
                 required
-                ref={(emailRef) => (inputRefs.current.email = emailRef)}
+                onChange={(e) =>
+                  setFormData({ ...formData, email: e.target.value })
+                }
               />
+              {emailError && (
+                <p className="text-sm text-red-500 mt-1">{emailError}</p>
+              )}
             </div>
             <div className="mb-6">
               <Input
@@ -123,10 +146,14 @@ const SignupComponent = () => {
                 placeholder="Enter your password"
                 label="Password"
                 required
-                ref={(passwordRef) =>
-                  (inputRefs.current.password = passwordRef)
+                onChange={(e) =>
+                  setFormData({ ...formData, password: e.target.value })
                 }
+                showPasswordToggle={true}
               />
+              {passwordError && (
+                <p className="text-sm text-red-500 mt-1">{passwordError}</p>
+              )}
             </div>
             <button
               type="submit"

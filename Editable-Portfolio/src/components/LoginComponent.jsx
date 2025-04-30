@@ -1,24 +1,17 @@
-import React, { useRef, useEffect, useState, useContext } from "react";
+import { useRef, useEffect, useState } from "react";
 import Input from "./Input";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import useUserAuthContext from "./contexts/userAuthContext";
-// import useUserContext from "./contexts/UserContext";\
-// import { UserAuthContext } from "./contexts/userAuthProvider";
 
 const LoginComponent = () => {
-  // const emailRef = useRef(null);
-  // const passwordRef = useRef(null);
-  const inputRefs = useRef({
-    email: null,
-    password: null,
-  });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
   const [error, setError] = useState(null);
-  const [response, setResponse] = useState(null);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
-  const { login } = useUserAuthContext();
+  const { login } = useUserAuthContext(); // login from UserAuthProvider
 
   // Close error popup after a delay
   useEffect(() => {
@@ -27,17 +20,14 @@ const LoginComponent = () => {
       const timer = setTimeout(() => {
         setShowErrorPopup(false);
         setError(null);
-      }, 5000); // Hide after 5 seconds
+      }, 5000);
 
       return () => clearTimeout(timer);
     }
   }, [error]);
 
-  const handleOnClick = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
-    const email = inputRefs.current.email.value;
-    const password = inputRefs.current.password.value;
-
     try {
       const response = await axios.post(
         `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
@@ -49,20 +39,21 @@ const LoginComponent = () => {
           },
         }
       );
-      setResponse(response.data);
       setError(null);
-      login();
+      login(); // make the status true
       navigate("/profile/home");
     } catch (err) {
       setError(err.response?.data?.message || "Something went wrong");
       setShowErrorPopup(true);
-      setResponse(null);
     }
+  };
+
+  const handleForgetPassword = async () => {
+    // will write code here
   };
 
   return (
     <div className="flex h-screen w-full bg-zinc-900 relative">
-      
       {/* Error Popup */}
       {showErrorPopup && (
         <div className="fixed top-5 left-1/2 transform -translate-x-1/2 z-50 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg flex items-center">
@@ -101,14 +92,14 @@ const LoginComponent = () => {
             Login
           </h2>
 
-          <form onSubmit={(e) => handleOnClick(e)}>
+          <form onSubmit={handleFormSubmit}>
             <div className="mb-4">
               <Input
                 type={"email"}
                 className={`w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500`}
                 placeholder="Enter your email"
                 label="Email"
-                ref={(emailRef) => (inputRefs.current.email = emailRef)}
+                onChange={(e) => setEmail(e.target.value)}
                 required
               />
             </div>
@@ -118,11 +109,17 @@ const LoginComponent = () => {
                 className={`w-full px-4 py-2 bg-zinc-700 text-zinc-300 border border-zinc-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-zinc-500 placeholder-zinc-500`}
                 placeholder="Enter your password"
                 label="Password"
-                ref={(passwordRef) =>
-                  (inputRefs.current.password = passwordRef)
-                }
+                onChange={(e) => setPassword(e.target.value)}
+                showPasswordToggle={handleForgetPassword}
                 required
               />
+              <button
+                type="button"
+                onClick={null}
+                className="text-red-400 hover:text-red-300 font-medium ml-1 transition"
+              >
+                Forget Password
+              </button>
             </div>
             <button
               type="submit"
@@ -143,7 +140,6 @@ const LoginComponent = () => {
               </p>
             </div>
           </form>
-
         </div>
       </div>
     </div>
