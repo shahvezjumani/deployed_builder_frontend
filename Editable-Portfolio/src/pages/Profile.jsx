@@ -12,21 +12,22 @@ import {
   Loader,
 } from "../components";
 import { UserProvider } from "../components/contexts/UserContext";
+import { THEMES } from "../constants";
 
 import { useNavigate, useParams } from "react-router-dom";
 
 const Profile = () => {
   const [users, setUsers] = useState({});
-  // const [status, setStatus] = useState(false);
-  const themes = ["theme-dark", "theme-light", "theme-golden", "theme-sky"];
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { slug } = useParams();
 
-  const html = document.querySelector("html");
+  // const html = document.querySelector("html");
+  const html = document.documentElement;
+
   useEffect(() => {
-    (async () => {
+    const fetchUser = async () => {
       try {
         const response = await axios.get(
           `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/u/${slug}`,
@@ -34,7 +35,7 @@ const Profile = () => {
             withCredentials: true,
           }
         );
-        html.classList.remove(...themes);
+        html.classList.remove(...THEMES);
         html.classList.add(response.data?.data?.theme);
 
         setError(null);
@@ -45,16 +46,10 @@ const Profile = () => {
         setLoading(false);
         navigate("/");
       }
-    })();
+    };
+
+    fetchUser();
   }, [slug, navigate]);
-
-  // useEffect(() => {
-  //   const html = document.querySelector("html");
-  //   themes.forEach((theme) => html.classList.remove(theme));
-  //   if (users?.theme) html.classList.add(users.theme);
-  // }, [users?.theme]);
-
-  console.log(users);
 
   // Return the loader while loading is true
   if (loading) {

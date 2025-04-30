@@ -14,16 +14,15 @@ import {
   Loader,
 } from "./components";
 import useUserAuthContext from "./components/contexts/userAuthContext";
+import { THEMES } from "./constants";
 
 const App = () => {
   const [users, setUsers] = useState({});
-  // const [status, setStatus] = useState(false);
-  const themes = ["theme-dark", "theme-light", "theme-golden", "theme-sky"];
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const { login, logout } = useUserAuthContext();
-  const html = document.querySelector("html");
+  const html = document.documentElement;
 
   useEffect(() => {
     const getUser = async () => {
@@ -34,7 +33,7 @@ const App = () => {
             withCredentials: true,
           }
         );
-        html.classList.remove(...themes);
+        html.classList.remove(...THEMES);
         html.classList.add(response.data?.data?.theme);
 
         setError(null);
@@ -51,23 +50,8 @@ const App = () => {
     getUser();
   }, []);
 
-  // write code for update user here
-  // useEffect(() => {
-  //   try {
-  //     localStorage.setItem("users", JSON.stringify(users));
-  //   } catch (error) {
-  //     if (error.name === "QuotaExceededError") {
-  //       console.error(
-  //         "LocalStorage quota exceeded. Consider clearing unused data."
-  //       );
-  //     } else {
-  //       throw error;
-  //     }
-  //   }
-  // }, [users]);
-
   useEffect(() => {
-    themes.forEach((theme) => html.classList.remove(theme));
+    THEMES.forEach((theme) => html.classList.remove(theme));
     if (users.theme) html.classList.add(users.theme);
   }, [users?.theme]);
 
@@ -78,23 +62,6 @@ const App = () => {
     }));
   };
 
-  // const updateUserProfile = (userData) => {
-  //   setUsers((prevUsers) => ({
-  //     ...prevUsers,
-  //     ...userData,
-  //   }));
-  // };
-
-  // const login = () => {
-  //   setStatus(true);
-  // };
-
-  // const logout = () => {
-  //   setStatus(false);
-  // };
-  console.log(users?.Projects, "projects");
-
-  console.log(users, "user");
   if (loading) {
     return <Loader />;
   }

@@ -2,17 +2,21 @@ import React, { useEffect, useState } from "react";
 import ButtonPrimary from "../Buttons/Button";
 import useUserContext from "../contexts/UserContext";
 import axios from "axios";
+import Loader from "../Loader";
+import Popup from "../Popup";
 
 export default function Footer() {
   const { users, updateUser } = useUserContext();
   const [response, setResponse] = React.useState(null);
   const [error, setError] = React.useState(null);
   const [showPopUp, setShowPopUp] = useState(false);
+  const [loading, setLoading] = useState(false);
   console.log(users);
 
   const handleSave = async () => {
     // TODO: implement your actual save logic here
     try {
+      setLoading(true);
       const {
         bannerUrl,
         availabilityIconUrl,
@@ -37,56 +41,13 @@ export default function Footer() {
         }
       );
 
-      // for (const project of projects) {
-      //   const formData = new FormData();
-
-      //   // Add text fields to form data
-      //   formData.append("title", project.title);
-
-      //   // Handle keywords array
-      //   if (Array.isArray(project.keywords)) {
-      //     project.keywords.forEach((keyword) => {
-      //       formData.append("keywords", keyword);
-      //     });
-      //   }
-
-      //   if (project.url) formData.append("url", project.url);
-
-      //   // Add file to form data if it exists
-      //   if (project.imgUrlFile) {
-      //     console.log(project.imgUrlFile);
-
-      //     formData.append("imgUrlFile", project.imgUrlFile);
-      //   }
-
-      //   // Send the properly formatted FormData
-      //   await axios.post(
-      //     `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/create-project`,
-      //     formData,
-      //     {
-      //       withCredentials: true,
-      //       headers: {
-      //         "Content-Type": "multipart/form-data", // This is set automatically by FormData
-      //       },
-      //     }
-      //   );
-      // }
       setResponse(response.data);
       setError(null);
+      setLoading(false);
     } catch (err) {
-      let errorMessage = "Something went wrong Shahvez";
-      if (err.response?.data) {
-        // Try to extract the error message from the HTML response
-        const match = err.response.data.match(/<pre>(.*?)<\/pre>/);
-
-        if (match && match[1]) {
-          errorMessage = match[1].trim().replace("Error: ", "");
-        }
-      }
-
-      setError(errorMessage);
-      // setShowErrorPopup(true);
+      setError(err.response?.data?.message || "Something went wrong");
       setResponse(null);
+      setLoading(false);
     }
   };
 
@@ -118,6 +79,9 @@ export default function Footer() {
     { id: 4, label: "Instagram", name: "instagram" },
   ];
 
+  if (loading) {
+    return <Loader />;
+  }
   return (
     <footer className="section">
       <div className="container">
@@ -190,16 +154,12 @@ export default function Footer() {
               onClick={handleSave}
               className="px-5 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition"
             >
-              Save
+              Update
             </button>
           </div>
         )}
       </div>
-      {showPopUp && (
-        <p className="fixed bottom-4 right-4 bg-green-600 text-white text-lg px-4 py-2 rounded-xl shadow-lg z-30 transition-all duration-300">
-          Successfully updated
-        </p>
-      )}
+      {showPopUp && <Popup message="Successfully updated" flag={true} />}
     </footer>
   );
 }
