@@ -13,6 +13,7 @@ const LoginComponent = () => {
   const [error, setError] = useState(null);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const { login } = useUserAuthContext(); // login from UserAuthProvider
+  
 
   // Close error popup after a delay
   useEffect(() => {
@@ -57,11 +58,7 @@ const LoginComponent = () => {
     <div className="flex h-screen w-full bg-zinc-900 relative">
       {/* Error Popup */}
       {showErrorPopup && (
-        <Popup
-          message={error}
-          onClick={() => setShowErrorPopup(false)}
-          flag={true}
-        />
+        <Popup message={error} onClick={() => setShowErrorPopup(false)} />
       )}
 
       <div className="hidden md:flex w-1/2 h-full justify-center items-center">
@@ -95,12 +92,12 @@ const LoginComponent = () => {
                 placeholder="Enter your password"
                 label="Password"
                 onChange={(e) => setPassword(e.target.value)}
-                showPasswordToggle={handleForgetPassword}
+                showPasswordToggle={true}
                 required
               />
               <button
                 type="button"
-                onClick={null}
+                onClick={() => navigate("/verifyOtp/password")}
                 className="text-red-400 hover:text-red-300 font-medium text-sm ml-1 transition"
               >
                 Forget Password

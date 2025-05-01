@@ -14,22 +14,25 @@ const SignupComponent = () => {
   });
   const [error, setError] = useState(null);
   const [response, setResponse] = useState(null);
-  const [showErrorPopup, setShowErrorPopup] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [flag, setFlag] = useState(false);
+  const [message, setMessage] = useState("");
 
   // Close error popup after a delay
   useEffect(() => {
-    if (error) {
-      setShowErrorPopup(true);
+    if (message) {
+      setShowPopup(true);
       const timer = setTimeout(() => {
-        setShowErrorPopup(false);
-        setError(null);
-      }, 5000); // Hide after 5 seconds
+        setShowPopup(false);
+        setMessage(null);
+        setFlag(false);
+      }, 2000); // Hide after 5 seconds
 
       return () => clearTimeout(timer);
     }
-  }, [error]);
+  }, [message]);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -65,16 +68,19 @@ const SignupComponent = () => {
           },
         }
       );
-      setResponse(response.data);
       setError(null);
-      alert(
-        `Your Profile URL is : "http://localhost:5173/
-        ${response.data?.data?.slug}"`
-      );
-      navigate("/");
+      // setShowPopup(true);
+      // setMessage("Check your email and Get OTP for verification");
+      // setFlag(true);
+      // navigate("/");
+      navigate(`/verifyOtp/${response.data?.data?.slug}`);
+      // setTimeout(() => {
+      //   navigate(`/verifyOtp/${response.data?.data?.slug}`);
+      // }, 4000);
     } catch (err) {
-      setShowErrorPopup(true);
-      setError(err.response?.data?.message || "Something went wrong");
+      setShowPopup(true);
+      setMessage(err.response?.data?.message || "Something went wrong");
+      // setError(err.response?.data?.message || "Something went wrong");
       setResponse(null);
     }
   };
@@ -82,8 +88,12 @@ const SignupComponent = () => {
 
   return (
     <div className="flex h-screen w-full bg-zinc-900">
-      {showErrorPopup && (
-        <Popup message={error} onClick={() => setShowErrorPopup(false)} />
+      {showPopup && (
+        <Popup
+          message={message}
+          onClick={() => setShowPopup(false)}
+          flag={flag}
+        />
       )}
 
       <div className="w-full md:w-1/2 flex justify-center items-center p-6">

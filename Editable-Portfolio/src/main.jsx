@@ -1,4 +1,4 @@
-import { StrictMode} from "react";
+import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
@@ -13,6 +13,8 @@ import {
 import Login from "./pages/Login.jsx";
 import Signup from "./pages/Signup.jsx";
 import Profile from "./pages/Profile.jsx";
+import OtpVerification from "./pages/OtpVerification.jsx";
+import ChangePassword from "./pages/ChangePassword.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +23,8 @@ const router = createBrowserRouter(
       <Route path="/profile/home" element={<App />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/:slug" element={<Profile />} />
+      <Route path="/verifyOtp/:path" element={<OtpVerification />} />
+      <Route path="/changePassword" element={<ChangePassword />} />
     </Route>
   )
 );

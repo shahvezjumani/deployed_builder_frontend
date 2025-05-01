@@ -11,6 +11,8 @@ import Hero from "./Hero/Hero.jsx";
 import Project from "./Project/Project.jsx";
 import Loader from "./Loader.jsx";
 import Skill from "./Skill/Skill.jsx";
+import OtpVerificationComponent from "./OtpVerificationComponent.jsx";
+import ChangePasswordComponent from "./ChangePasswordComponent.jsx";
 
 export {
   Header,
@@ -26,4 +28,6 @@ export {
   Loader,
   Project,
   Skill,
+  OtpVerificationComponent,
+  ChangePasswordComponent,
 };

@@ -1,6 +1,12 @@
 import { LoginComponent } from "../components";
 
 const Login = () => {
-  return <LoginComponent />;
+  return (
+    <>
+      <LoginComponent />
+      {/* <OtpVerificationPage /> */}
+      {/* <ChangePassword /> */}
+    </>
+  );
 };
 export default Login;
