@@ -53,7 +53,7 @@ const OtpVerificationComponent = ({ path }) => {
       // Add your verification logic here
       // code for OTP verification will write here in future
       // const response = await axios.post(
-      //   `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/verify-otp`,
+      //   `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/verify-otp/${path}`,
       //   { otp },
       //   {
       //     withCredentials: true,
