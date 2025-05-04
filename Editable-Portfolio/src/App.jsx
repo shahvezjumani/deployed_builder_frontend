@@ -1,6 +1,7 @@
 import { ReactLenis } from "lenis/react";
 import { useState, useEffect } from "react";
-import axios from "axios";
+// import axios from "axios";
+import { getCurrentUser } from "./services/api.js";
 import { useNavigate } from "react-router-dom";
 import { UserProvider } from "./components/contexts/UserContext";
 import {
@@ -27,12 +28,7 @@ const App = () => {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/me`,
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await getCurrentUser();
         html.classList.remove(...THEMES);
         html.classList.add(response.data?.data?.theme);
 

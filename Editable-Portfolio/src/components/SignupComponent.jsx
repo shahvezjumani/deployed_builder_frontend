@@ -1,9 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Input from "./Input";
-import axios from "axios";
+// import axios from "axios";
 import { useEffect } from "react";
 import Popup from "./Popup";
+import { registerUser } from "../services/api.js";
 
 const SignupComponent = () => {
   const navigate = useNavigate();
@@ -58,16 +59,7 @@ const SignupComponent = () => {
     if (!valid) return;
 
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/register`,
-        formData,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await registerUser(formData);
       setError(null);
       // setShowPopup(true);
       // setMessage("Check your email and Get OTP for verification");

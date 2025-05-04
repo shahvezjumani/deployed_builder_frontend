@@ -1,5 +1,6 @@
 import { ReactLenis } from "lenis/react";
-import axios from "axios";
+// import axios from "axios";
+import { getUserBySlug } from "../services/api.js";
 import { useState, useEffect } from "react";
 import {
   Footer,
@@ -29,12 +30,7 @@ const Profile = () => {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const response = await axios.get(
-          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/u/${slug}`,
-          {
-            withCredentials: true,
-          }
-        );
+        const response = await getUserBySlug(slug);
         html.classList.remove(...THEMES);
         html.classList.add(response.data?.data?.theme);
 

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
 import ButtonPrimary from "../Buttons/Button";
 import useUserContext from "../contexts/UserContext";
-import axios from "axios";
+// import axios from "axios";
+import { userUpdate } from "../../services/api.js";
 import Loader from "../Loader";
 import Popup from "../Popup";
 
@@ -30,16 +31,7 @@ export default function Footer() {
       console.log(users, "Hello I am user");
       console.log(remainingProject, "Hello project");
 
-      const response = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/update`,
-        remainingUser,
-        {
-          withCredentials: true, // Send cookies if using sessions
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await userUpdate(remainingUser);
 
       setResponse(response.data);
       setError(null);

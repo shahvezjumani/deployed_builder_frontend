@@ -1,9 +1,10 @@
 import { useRef, useEffect, useState } from "react";
 import Input from "./Input";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 import useUserAuthContext from "./contexts/userAuthContext";
 import Popup from "./Popup";
+import { loginUser } from "../services/api.js";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
@@ -13,7 +14,6 @@ const LoginComponent = () => {
   const [error, setError] = useState(null);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const { login } = useUserAuthContext(); // login from UserAuthProvider
-  
 
   // Close error popup after a delay
   useEffect(() => {
@@ -31,16 +31,7 @@ const LoginComponent = () => {
   const handleFormSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/login`,
-        { email, password },
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await loginUser(email, password);
       setError(null);
       login(); // make the status true
       navigate("/profile/home");

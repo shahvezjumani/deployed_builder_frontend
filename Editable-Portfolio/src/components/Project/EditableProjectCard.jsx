@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
 import useUserContext from "../contexts/UserContext";
 import { useRef } from "react";
-import axios from "axios";
+// import axios from "axios";
+import { createProject, updateProject } from "../../services/api.js";
+import Project from "./Project";
 
 function EditableProjectCard({ projectToUpdate }) {
   const { users, updateUser } = useUserContext();
@@ -48,16 +50,7 @@ function EditableProjectCard({ projectToUpdate }) {
   const handleSave = async () => {
     const { imgUrl, ...remainingProject } = project;
     try {
-      const response = await axios.post(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/create-project`,
-        remainingProject,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await createProject(remainingProject);
       setProject((prev) => ({
         ...prev,
         imgUrl: "/images/check_4824138.png",
@@ -75,18 +68,7 @@ function EditableProjectCard({ projectToUpdate }) {
   const handleUpdateProject = async () => {
     const { imgUrl, ...remainingProject } = project;
     try {
-      const response = await axios.put(
-        `${import.meta.env.VITE_BACKEND_URL}/api/v1/project/update-project/${
-          project.id
-        }`,
-        remainingProject,
-        {
-          withCredentials: true,
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
+      const response = await updateProject(project.id, remainingProject);
       setProject((prev) => ({
         ...prev,
         imgUrl: "/images/check_4824138.png",
