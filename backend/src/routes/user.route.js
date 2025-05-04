@@ -13,7 +13,7 @@ import {
   sendResetOtp,
   resetPassword,
 } from "../controllers/user.controller.js";
-import verifyJWTl, { verifyJWT } from "../middlewares/auth.middleware.js";
+import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
 
 const router = Router();
