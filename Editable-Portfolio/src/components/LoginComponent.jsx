@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import useUserAuthContext from "./contexts/userAuthContext";
 import Popup from "./Popup";
 import { loginUser } from "../services/api.js";
+import axios from "axios";
 
 const LoginComponent = () => {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ const LoginComponent = () => {
   const [error, setError] = useState(null);
   const [showErrorPopup, setShowErrorPopup] = useState(false);
   const { login } = useUserAuthContext(); // login from UserAuthProvider
+  const [emailError, setEmailError] = useState(false);
 
   // Close error popup after a delay
   useEffect(() => {
@@ -42,7 +44,21 @@ const LoginComponent = () => {
   };
 
   const handleForgetPassword = async () => {
-    // will write code here
+    try {
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/forgot-password`,
+        { email },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response?.data?.data, "response");
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -75,6 +91,9 @@ const LoginComponent = () => {
                 onChange={(e) => setEmail(e.target.value)}
                 required
               />
+              {emailError && (
+                <p className="text-sm text-red-500 mt-1">Email is required</p>
+              )}
             </div>
             <div className="mb-6">
               <Input
@@ -88,7 +107,14 @@ const LoginComponent = () => {
               />
               <button
                 type="button"
-                onClick={() => navigate("/verifyOtp/password")}
+                onClick={() => {
+                  if (email) {
+                    handleForgetPassword();
+                    navigate(`/verifyOtp/password/${email}`);
+                  } else {
+                    setEmailError(true);
+                  }
+                }}
                 className="text-red-400 hover:text-red-300 font-medium text-sm ml-1 transition"
               >
                 Forget Password

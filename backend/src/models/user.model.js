@@ -30,7 +30,7 @@ const userSchema = new Schema(
     logoUrl: {
       type: String,
       default:
-        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1743836667/favicon_bhxawl.svg",
+        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1750697452/favicon_npgpb6.svg",
     },
     isAppEditable: {
       type: Boolean,
@@ -46,7 +46,7 @@ const userSchema = new Schema(
     },
     topHeading: {
       type: String,
-      default: "Building Scalable Modern Websites for the Future",
+      default: "Write your top heading here",
     },
     topHeadingHeight: {
       type: String,
@@ -55,12 +55,12 @@ const userSchema = new Schema(
     availabilityIconUrl: {
       type: String,
       default:
-        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1743836667/avatar-1_yzja1k.png",
+        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1750697315/avatar-1_p8v1d9.png",
     },
     bannerUrl: {
       type: String,
       default:
-        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1743836747/Untitled-a_wqkkew.png",
+        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1750698190/145857007_307ce493-b254-4b2d-8ba4-d12c080d6651_jptfer.jpg",
     },
     bannerColor: {
       type: String,
@@ -69,7 +69,7 @@ const userSchema = new Schema(
     aboutMe: {
       type: String,
       default:
-        "Welcome! I&apos;m Henry, a professional web developer with a knack for crafting visually stunning and highly functional websites. Combining creativity and technical expertise, I transform your vision into a digital masterpiece that excels in both appearance and performance.",
+        "Write your about me here. This is a great place to introduce yourself and share your story with the world.",
     },
     numberOfProjects: {
       type: Number,
@@ -82,7 +82,7 @@ const userSchema = new Schema(
     aboutMeIconUrl: {
       type: String,
       default:
-        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1743836667/avatar-1_yzja1k.png",
+        "https://res.cloudinary.com/dqkvzcglf/image/upload/v1750697385/icons8-edit-image-48_yghwkc.png",
     },
     skills: {
       type: [Object],

@@ -63,73 +63,74 @@ const generateAccessAndRefreshTokens = async (userId) => {
   }
 };
 
-const registerUser = asyncHandler(async (req, res) => {
-  const { userName, email, password } = req.body;
+// will see later and work on it later
+// const registerUser = asyncHandler(async (req, res) => {
+//   const { userName, email, password } = req.body;
 
-  if (!userName || !email || !password) {
-    throw new ApiError(400, "All fields are required");
-  }
+//   if (!userName || !email || !password) {
+//     throw new ApiError(400, "All fields are required");
+//   }
 
-  const existingUser = await User.findOne({ email, userName });
-  if (existingUser) {
-    throw new ApiError(
-      409,
-      "User with this username and/or email already exists"
-    );
-  }
+//   const existingUser = await User.findOne({ email, userName });
+//   if (existingUser) {
+//     throw new ApiError(
+//       409,
+//       "User with this username and/or email already exists"
+//     );
+//   }
 
-  const slug = userName.toLowerCase().replace(/\s+/g, "-");
+//   const slug = userName.toLowerCase().replace(/\s+/g, "-");
 
-  const slugExists = await User.findOne({ slug });
-  if (slugExists) {
-    throw new ApiError(
-      409,
-      "Username already taken, please choose a different name"
-    );
-  }
+//   const slugExists = await User.findOne({ slug });
+//   if (slugExists) {
+//     throw new ApiError(
+//       409,
+//       "Username already taken, please choose a different name"
+//     );
+//   }
 
-  const user = await User.create({
-    userName,
-    email,
-    password,
-    slug,
-  });
+//   const user = await User.create({
+//     userName,
+//     email,
+//     password,
+//     slug,
+//   });
 
-  const createdUser = await User.findById(user._id).select(
-    "-password -refreshToken"
-  );
+//   const createdUser = await User.findById(user._id).select(
+//     "-password -refreshToken"
+//   );
 
-  if (!createdUser) {
-    throw new ApiError(500, "Something went wrong while registering the user");
-  }
+//   if (!createdUser) {
+//     throw new ApiError(500, "Something went wrong while registering the user");
+//   }
 
-  // await sendVerifyOtp(user._id);
+//   // await sendVerifyOtp(user._id);
 
-  const emailOptions = {
-    from: process.env.SMTP_EMAIL,
-    to: email,
-    subject: `🚀 Welcome aboard, ${userName}! Your portfolio journey begins now.`,
-    text: `Hi ${userName}, 👋
-  
-  Welcome to Editable Portfolio – your personal space to create, customize, and showcase your talents to the world.
-  
-  ✨ What's next?
-  Start editing your profile, adding your skills, and building the portfolio that reflects YOU. Everything is customizable – just the way you want it.
-  Your Profile URL: ${process.env.CORS_ORIGIN}/${slug}
-  
-  We're excited to see what you build!
-  
-  Cheers,  
-  The Editable Portfolio Team 💼
-  `,
-  };
+//   const emailOptions = {
+//     from: process.env.SMTP_EMAIL,
+//     to: email,
+//     subject: `🚀 Welcome aboard, ${userName}! Your portfolio journey begins now.`,
+//     text: `Hi ${userName}, 👋
 
-  await transporter.sendMail(emailOptions);
+//   Welcome to Editable Portfolio – your personal space to create, customize, and showcase your talents to the world.
 
-  return res
-    .status(201)
-    .json(new ApiResponse(201, createdUser, "User registered successfully"));
-});
+//   ✨ What's next?
+//   Start editing your profile, adding your skills, and building the portfolio that reflects YOU. Everything is customizable – just the way you want it.
+//   Your Profile URL: ${process.env.CORS_ORIGIN}/${slug}
+
+//   We're excited to see what you build!
+
+//   Cheers,
+//   The Editable Portfolio Team 💼
+//   `,
+//   };
+
+//   await transporter.sendMail(emailOptions);
+
+//   return res
+//     .status(201)
+//     .json(new ApiResponse(201, createdUser, "User registered successfully"));
+// });
 
 const updateUser = asyncHandler(async (req, res) => {
   const user = req?.user;
@@ -447,182 +448,570 @@ const refreshAccessToken = asyncHandler(async (req, res) => {
 
 // Email verification via OTP
 
-const sendVerifyOtp = async (req, res)=>{
+const sendVerifyOtp = async (req, res) => {
   try {
-
-    const {userId} = req.body;
+    // search the user with email from database
+    const { userId } = req.body;
+    // const {slug} = req.params;
 
     const user = await userModel.findById(userId);
 
-    if(user.isVerified){
-
-      return res.json({success: false, message: "Account Already verified"})
-
+    if (user.isVerified) {
+      return res.json({ success: false, message: "Account Already verified" });
     }
 
-    const otp= String(Math.floor(100000 + Math.random() * 900000))
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
 
     user.verifyOtp = otp;
-    user.verifyOtpExpiry = Date.now() + 10 * 60 * 1000
-    
+    user.verifyOtpExpiry = Date.now() + 10 * 60 * 1000;
+
     await user.save();
 
     const mailOption = {
-
       from: process.env.SMTP_EMAIL,
       to: user.email,
       subject: `Account Verification OTP`,
       text: `Your OTP for email verification is ${otp}. It is valid for 10 minutes.`,
-
-    }
+    };
 
     await transporter.sendMail(mailOption);
 
-    res.json({success: true, message: 'Verification OTP send on email'});
-
-
-
+    res.json({ success: true, message: "Verification OTP send on email" });
   } catch (error) {
-
-    res.json({success: false, message: error.message });
-    
+    res.json({ success: false, message: error.message });
   }
-}
+};
 
-const verifyEmail = async (req, res)=>{
+// will see this code later
+// const verifyEmail = async (req, res) => {
+//   const { userId } = req.body;
 
-  const {userId} = req.body;
+//   if (!userId || !otp) {
+//     return res.json({ success: false, message: "Missing Details" });
+//   }
 
-  if(!userId || !otp){
-    return res.json({success: false, message: 'Missing Details'});
-  }
+//   try {
+//     const user = await userModel.findById(userId);
+//     if (!user) {
+//       return res.json({ success: false, message: "User not found" });
+//     }
 
-  try {
-    const user = await userModel.findById(userId);
-    if(!user){
-      return res.json({success: false, message: 'User not found'});
+//     if (user.verifyOtp === "" || user.verifyOtp !== otp) {
+//       return res.json({ success: false, message: "Invalid OTP" });
+//     }
 
-    }
+//     if (user.verifyOtpExpiry < Date.now()) {
+//       return res.json({ success: false, message: "OTP Expired" });
+//     }
 
-    if(user.verifyOtp === '' || user.verifyOtp !== otp){
-      return res.json({success: false, message: 'Invalid OTP'});
-    }
+//     user.isVerified = true;
+//     user.verifyOtp = "";
+//     user.verifyOtpExpiry = 0;
 
-    if(user.verifyOtpExpiry < Date.now()){
-      return res.json({success:false, message: 'OTP Expired'});
-    }
-
-    user.isVerified = true;
-    user.verifyOtp = '';
-    user.verifyOtpExpiry = 0;
-
-    await user.save();
-    return res.json({success: true, message: 'Email verified Successfully'});
-
-    
-  } catch (error) {
-
-    return res.json({success: false, message: error.message});
-    
-  }
-
-
-
-}
+//     await user.save();
+//     return res.json({ success: true, message: "Email verified Successfully" });
+//   } catch (error) {
+//     return res.json({ success: false, message: error.message });
+//   }
+// };
 
 //Forgot Password
 
-const sendResetOtp = async (req, res) =>{
+const sendResetOtp = async (req, res) => {
+  const { email } = req.body;
 
-  const {email} = req.body;
-
-  if(!email){
-    return res.json({success:false, message: 'Email is required'})
+  if (!email) {
+    return res.json({ success: false, message: "Email is required" });
   }
 
   try {
-
-    const user = await userModel.findOne({email});
-    if(!user){
-      return res.json({ success: false, message: 'User not found'});
+    const user = await userModel.findOne({ email });
+    if (!user) {
+      return res.json({ success: false, message: "User not found" });
     }
 
-    const otp= String(Math.floor(100000 + Math.random() * 900000))
+    const otp = String(Math.floor(100000 + Math.random() * 900000));
 
     user.resetOtp = otp;
-    user.resetOtpExpiry = Date.now() + 10 * 60 * 1000
-    
+    user.resetOtpExpiry = Date.now() + 10 * 60 * 1000;
+
     await user.save();
 
     const mailOption = {
-
       from: process.env.SMTP_EMAIL,
       to: user.email,
       subject: `Password Reset OTP`,
       text: `Your OTP for password reset is ${otp}. It is valid for 10 minutes.`,
-
-    }
+    };
 
     await transporter.sendMail(mailOption);
 
-    return res.json({ success: true, message: 'OTP sent successfully'});
-
-
+    return res.json({ success: true, message: "OTP sent successfully" });
   } catch (error) {
-    return res.json({ success: false, message: error.message});
+    return res.json({ success: false, message: error.message });
+  }
+};
+
+// will see this code later
+// const resetPassword = async (req, res) => {
+//   const { email, otp, newPassword } = req.body;
+
+//   // search user with userId from database then change the password
+//   // will get userId, newPassword, and confirmPassword from req.body
+
+//   if (!email || !otp || !newPassword) {
+//     return res.json({
+//       success: false,
+//       message: "Email, OTP, and new password are required",
+//     });
+//   }
+
+//   try {
+//     const user = await userModel.findOne({ email });
+
+//     if (!user) {
+//       return res.json({ success: false, message: "User not found" });
+//     }
+
+//     if (user.resetOtp === "" || user.resetOtp !== otp) {
+//       return res.json({ success: false, message: "Invalid OTP" });
+//     }
+
+//     if (user.resetOtpExpiry < Date.now()) {
+//       return res.json({ success: false, message: "OTP Expired" });
+//     }
+
+//     const hashedPassword = await bcrypt.hash(newPassword, 10);
+
+//     user.password = hashedPassword;
+//     user.resetOtp = "";
+//     user.resetOtpExpiry = 0;
+
+//     await user.save();
+
+//     return res.json({
+//       success: true,
+//       message: "Password has been reset successfully",
+//     });
+//   } catch (error) {
+//     return res.json({ success: false, message: error.message });
+//   }
+// };
+
+// Function to generate a random OTP
+
+const generateOTP = (length = 6) => {
+  let otp = "";
+  for (let i = 0; i < length; i++) {
+    otp += Math.floor(Math.random() * 10);
+  }
+  return otp;
+};
+
+const sendVerificationOTP = async (user) => {
+  const otp = generateOTP();
+  const otpExpiry = Date.now() + 15 * 60 * 1000; // OTP valid for 15 minutes
+
+  await User.findByIdAndUpdate(user._id, {
+    verifyOtp: otp,
+    verifyOtpExpiry: otpExpiry,
+    isVerfied: false,
+  });
+
+  // Send OTP email
+  const emailOptions = {
+    from: process.env.SMTP_EMAIL,
+    to: user.email,
+    subject: `Verify your Editable Portfolio account`,
+    text: `Hi ${user.userName}, 👋
     
+Welcome to Editable Portfolio! To complete your registration, please verify your email address using the OTP below:
+
+Your OTP: ${otp}
+
+This code will expire in 15 minutes.
+
+We're excited to have you join us!
+
+Cheers,  
+The Editable Portfolio Team 💼
+    `,
+  };
+
+  await transporter.sendMail(emailOptions);
+};
+
+const registerUser = asyncHandler(async (req, res) => {
+  const { userName, email, password } = req.body;
+
+  if (!userName || !email || !password) {
+    throw new ApiError(400, "All fields are required");
   }
 
-}
+  const existingUser = await User.findOne({
+    $or: [{ email }, { userName }],
+  });
 
-const resetPassword = async (req, res) => {
-  const {email, otp, newPassword} = req.body;
-
-  if(!email || !otp || !newPassword){
-
-    return res.json({ success: false, message: 'Email, OTP, and new password are required'});
-
+  if (existingUser) {
+    throw new ApiError(
+      409,
+      "User with this username and/or email already exists"
+    );
   }
 
-  try {
+  const slug = userName.toLowerCase().replace(/\s+/g, "-");
 
-    const user = await userModel.findOne({email});
-
-    if(!user){
-
-      return res.json({ success: false, message: 'User not found'});
-    }
-
-    if(user.resetOtp === "" || user.resetOtp !== otp){
-      return res.json({success: false, message: 'Invalid OTP'});
-    }
-
-    if(user.resetOtpExpiry < Date.now()){
-
-      return res.json({ success: false, message: 'OTP Expired'});
-    }
-
-    const hashedPassword = await bcrypt.hash(newPassword, 10);
-
-    user.password = hashedPassword;
-    user.resetOtp = '';
-    user.resetOtpExpiry = 0;
-
-    await user.save();
-
-    return res.json({ success:true, message: 'Password has been reset successfully'});
-    
-  } catch (error) {
-    return res.json({ success: false, message: error.message});
-    
+  const slugExists = await User.findOne({ slug });
+  if (slugExists) {
+    throw new ApiError(
+      409,
+      "Username already taken, please choose a different name"
+    );
   }
 
+  const user = await User.create({
+    userName,
+    email,
+    password,
+    slug,
+    isVerfied: false, // Ensure user starts as unverified
+  });
 
-}
+  const createdUser = await User.findById(user._id).select(
+    "-password -refreshToken"
+  );
 
+  if (!createdUser) {
+    throw new ApiError(500, "Something went wrong while registering the user");
+  }
 
+  // Send verification OTP to user's email
+  await sendVerificationOTP(createdUser);
 
+  return res
+    .status(201)
+    .json(
+      new ApiResponse(
+        201,
+        createdUser,
+        "User registered successfully. Please check your email for verification OTP."
+      )
+    );
+});
 
+// Add this new controller to verify the OTP
+const verifyEmail = asyncHandler(async (req, res) => {
+  const { email, otp } = req.body;
+
+  if (!email || !otp) {
+    throw new ApiError(400, "Email and OTP are required");
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  if (user.isVerfied) {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Email already verified"));
+  }
+
+  if (user.verifyOtp !== otp) {
+    throw new ApiError(400, "Invalid OTP");
+  }
+
+  if (user.verifyOtpExpiry < Date.now()) {
+    throw new ApiError(400, "OTP has expired");
+  }
+
+  // Verify user and clear OTP fields
+  user.isVerfied = true;
+  user.verifyOtp = "";
+  user.verifyOtpExpiry = 0;
+
+  await user.save();
+
+  // Send welcome email after verification
+  const welcomeEmailOptions = {
+    from: process.env.SMTP_EMAIL,
+    to: email,
+    subject: `🚀 Welcome aboard, ${user.userName}! Your portfolio journey begins now.`,
+    text: `Hi ${user.userName}, 👋
+  
+Thank you for verifying your email! Your Editable Portfolio account is now fully active.
+  
+✨ What's next?
+Start editing your profile, adding your skills, and building the portfolio that reflects YOU. Everything is customizable – just the way you want it.
+Your Profile URL: ${process.env.CORS_ORIGIN}/${user.slug}
+  
+We're excited to see what you build!
+  
+Cheers,  
+The Editable Portfolio Team 💼
+    `,
+  };
+
+  await transporter.sendMail(welcomeEmailOptions);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Email verified successfully"));
+});
+
+// Add this controller to resend OTP if needed
+const resendVerificationOTP = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw new ApiError(400, "Email is required");
+  }
+
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  if (user.isVerfied) {
+    return res
+      .status(200)
+      .json(new ApiResponse(200, {}, "Email already verified"));
+  }
+
+  // Send new verification OTP
+  await sendVerificationOTP(user);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Verification OTP sent successfully"));
+});
+
+/**
+ * Controller for initiating password reset process
+ * Generates an OTP and sends it to the user's email
+ */
+const forgotPassword = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw new ApiError(400, "Email is required");
+  }
+
+  // Find user by email
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, "User with this email does not exist");
+  }
+
+  // Generate OTP for password reset
+  const otp = generateOTP();
+  const otpExpiry = Date.now() + 15 * 60 * 1000; // OTP valid for 15 minutes
+
+  // Update user with password reset OTP
+  user.resetOtp = otp;
+  user.resetOtpExpiry = new Date(otpExpiry);
+  await user.save();
+
+  // Send password reset OTP email
+  const emailOptions = {
+    from: process.env.SMTP_EMAIL,
+    to: email,
+    subject: `Password Reset - Editable Portfolio`,
+    text: `Hi ${user.userName}, 👋
+    
+We received a request to reset your password for your Editable Portfolio account.
+
+Your Password Reset OTP: ${otp}
+
+This code will expire in 15 minutes.
+
+If you didn't request this password reset, please ignore this email or contact support if you have concerns.
+
+Cheers,  
+The Editable Portfolio Team 💼
+    `,
+  };
+
+  await transporter.sendMail(emailOptions);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, "Password reset OTP sent to your email"));
+});
+
+/**
+ * Controller for only verifying the reset OTP
+ */
+const verifyResetOTP = asyncHandler(async (req, res) => {
+  const { email, otp } = req.body;
+
+  // Validate request body
+  if (!email || !otp) {
+    throw new ApiError(400, "Email and OTP are required");
+  }
+
+  // Find user by email
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  // Validate OTP
+  if (user.resetOtp !== otp) {
+    throw new ApiError(400, "Invalid OTP");
+  }
+
+  // Check if OTP has expired
+  if (user.resetOtpExpiry < Date.now()) {
+    throw new ApiError(400, "OTP has expired. Please request a new one");
+  }
+
+  return res.status(200).json(
+    new ApiResponse(
+      200,
+      {
+        verified: true,
+        email: email,
+      },
+      "OTP verified successfully. You can now reset your password."
+    )
+  );
+});
+
+/**
+ * Controller for setting a new password after OTP verification
+ */
+const resetPassword = asyncHandler(async (req, res) => {
+  const { email, newPassword, confirmPassword } = req.body;
+
+  // Validate request body
+  if (!email || !newPassword || !confirmPassword) {
+    throw new ApiError(400, "All fields are required");
+  }
+
+  if (newPassword !== confirmPassword) {
+    throw new ApiError(400, "Passwords do not match");
+  }
+
+  // Password strength validation
+  if (newPassword.length < 8) {
+    throw new ApiError(400, "Password must be at least 8 characters long");
+  }
+
+  // Find user by email
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, "User not found");
+  }
+
+  // Check if user has a valid reset OTP (ensuring they went through verification)
+  if (!user.resetOtp || user.resetOtpExpiry < Date.now()) {
+    throw new ApiError(
+      400,
+      "Invalid or expired verification session. Please restart the password reset process"
+    );
+  }
+
+  // Update password and clear reset OTP fields
+  user.password = newPassword; // This will be hashed via the pre-save hook
+  user.resetOtp = "";
+  user.resetOtpExpiry = Date.now();
+
+  await user.save();
+
+  // Send password change confirmation email
+  const emailOptions = {
+    from: process.env.SMTP_EMAIL,
+    to: email,
+    subject: `Password Changed Successfully - Editable Portfolio`,
+    text: `Hi ${user.userName}, 👋
+    
+Your password has been successfully changed.
+
+You can now log in to your account with your new password.
+
+If you did not make this change, please contact support immediately.
+
+Cheers,  
+The Editable Portfolio Team 💼
+    `,
+  };
+
+  await transporter.sendMail(emailOptions);
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        200,
+        {},
+        "Password reset successful. You can now login with your new password."
+      )
+    );
+});
+
+/**
+ * Controller to resend the password reset OTP if it expires
+ */
+const resendResetOTP = asyncHandler(async (req, res) => {
+  const { email } = req.body;
+
+  if (!email) {
+    throw new ApiError(400, "Email is required");
+  }
+
+  // Find user by email
+  const user = await User.findOne({ email });
+
+  if (!user) {
+    throw new ApiError(404, "User with this email does not exist");
+  }
+
+  // Generate new OTP for password reset
+  const otp = generateOTP();
+  const otpExpiry = Date.now() + 15 * 60 * 1000; // OTP valid for 15 minutes
+
+  // Update user with new password reset OTP
+  user.resetOtp = otp;
+  user.resetOtpExpiry = new Date(otpExpiry);
+  await user.save();
+
+  // Send new password reset OTP email
+  const emailOptions = {
+    from: process.env.SMTP_EMAIL,
+    to: email,
+    subject: `New Password Reset OTP - Editable Portfolio`,
+    text: `Hi ${user.userName}, 👋
+    
+Here is your new password reset OTP for your Editable Portfolio account:
+
+Your Password Reset OTP: ${otp}
+
+This code will expire in 15 minutes.
+
+If you didn't request this password reset, please ignore this email or contact support.
+
+Cheers,  
+The Editable Portfolio Team 💼
+    `,
+  };
+
+  await transporter.sendMail(emailOptions);
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(200, {}, "New password reset OTP sent to your email")
+    );
+});
+
+export {};
 
 export {
   registerUser,
@@ -637,4 +1026,7 @@ export {
   verifyEmail,
   sendResetOtp,
   resetPassword,
+  forgotPassword,
+  verifyResetOTP,
+  resendResetOTP,
 };

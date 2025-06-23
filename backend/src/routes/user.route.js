@@ -12,6 +12,8 @@ import {
   verifyEmail,
   sendResetOtp,
   resetPassword,
+  forgotPassword,
+  verifyResetOTP,
 } from "../controllers/user.controller.js";
 import { verifyJWT } from "../middlewares/auth.middleware.js";
 import { upload } from "../middlewares/multer.middleware.js";
@@ -23,7 +25,10 @@ router.post("/register", registerUser); // User Registration
 router.post("/login", loginUser); // User Login
 router.post("/refresh-token", refreshAccessToken); // Refresh access token
 router.get("/u/:slug", getUserBySlug); // Get user by slug
-
+router.post("/verify-email", verifyEmail); // Verify user email
+router.post("/forgot-password", forgotPassword); // Forgot password
+router.post("/verify-reset-otp", verifyResetOTP); // Verify reset OTP
+router.post("/reset-password", resetPassword); // Reset password
 
 // Protected Routes (require authentication)
 router.get("/me", verifyJWT, getCurrentUser); // Get current user

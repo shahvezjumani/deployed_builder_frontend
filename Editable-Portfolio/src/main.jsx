@@ -23,8 +23,8 @@ const router = createBrowserRouter(
       <Route path="/profile/home" element={<App />} />
       <Route path="/signup" element={<Signup />} />
       <Route path="/:slug" element={<Profile />} />
-      <Route path="/verifyOtp/:path" element={<OtpVerification />} />
-      <Route path="/changePassword" element={<ChangePassword />} />
+      <Route path="/verifyOtp/:path/:data" element={<OtpVerification />} />
+      <Route path="/changePassword/:userId" element={<ChangePassword />} />
     </Route>
   )
 );

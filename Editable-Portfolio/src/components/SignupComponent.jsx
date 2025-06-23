@@ -65,7 +65,7 @@ const SignupComponent = () => {
       // setMessage("Check your email and Get OTP for verification");
       // setFlag(true);
       // navigate("/");
-      navigate(`/verifyOtp/${response.data?.data?.slug}`);
+      navigate(`/verifyOtp/user/${response.data?.data?.email}`);
       // setTimeout(() => {
       //   navigate(`/verifyOtp/${response.data?.data?.slug}`);
       // }, 4000);

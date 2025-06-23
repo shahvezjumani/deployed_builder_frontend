@@ -1,12 +1,16 @@
 import axios from "axios";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
+import Popup from "./Popup";
 
-const OtpVerificationComponent = ({ path }) => {
+const OtpVerificationComponent = ({ path, data }) => {
   const inputRefs = useRef([]);
   const navigate = useNavigate();
+  const [showPopup, setShowPopup] = useState(false);
+  const [message, setMessage] = useState("");
+
   // console.log(window.location.pathname);
-  const location = useLocation();
+  // const location = useLocation();
 
   console.log(location.pathname, "location");
 
@@ -46,35 +50,67 @@ const OtpVerificationComponent = ({ path }) => {
     e.preventDefault(); // prevent default paste
   };
 
+  useEffect(() => {
+    if (message) {
+      setShowPopup(true);
+      const timer = setTimeout(() => {
+        setShowPopup(false);
+        setMessage(null);
+      }, 5000); // Hide after 5 seconds
+
+      return () => clearTimeout(timer);
+    }
+  }, [message]);
+
   const handleVerify = async () => {
     try {
       const otp = inputRefs.current.map((ref) => ref.value).join("");
       console.log("OTP Entered:", otp);
+      console.log(data, "I am the data");
       // Add your verification logic here
       // code for OTP verification will write here in future
-      // const response = await axios.post(
-      //   `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/verify-otp/${path}`,
-      //   { otp },
-      //   {
-      //     withCredentials: true,
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
+
+      // use response.data._id instead of data here as we are passing data from login page
       if (path === "password") {
-        navigate("/changePassword");
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/verify-reset-otp`,
+          { otp, email: data },
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response?.data?.data, "response");
+        navigate(`/changePassword/${data}`);
       } else {
+        const response = await axios.post(
+          `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/verify-email`,
+          { otp, email: data },
+          {
+            withCredentials: true,
+            headers: {
+              "Content-Type": "application/json",
+            },
+          }
+        );
+        console.log(response?.data?.data, "response");
         navigate("/");
       }
     } catch (err) {
       console.log(err);
+      setMessage(err.response?.data?.message || "Something went wrong");
+      setShowPopup(true);
     }
   };
 
   return (
     <div className="w-full h-screen bg-zinc-900 text-white flex items-center justify-center">
       <div className="flex flex-col items-center gap-6">
+        {showPopup && (
+          <Popup message={message} onClick={() => setShowPopup(false)} />
+        )}
         <h1 className="text-4xl font-bold">Verify OTP</h1>
         <p className="text-sm text-gray-300">
           Enter the 6-digit code sent to your given email

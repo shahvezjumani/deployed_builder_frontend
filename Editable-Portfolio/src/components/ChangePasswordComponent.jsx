@@ -3,13 +3,15 @@ import Input from "./Input";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-const ChangePasswordComponent = () => {
+const ChangePasswordComponent = ({ userId }) => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [error, setError] = useState(null);
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
   const navigate = useNavigate();
+
+  console.log("userId", userId);
 
   const handleFormSubmit = async (e) => {
     e.preventDefault();
@@ -34,16 +36,17 @@ const ChangePasswordComponent = () => {
       }
       // check code in future when backend will perfectly work
 
-      // const response = await axios.post(
-      //   `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/change-password`,
-      //   { password, confirmPassword },
-      //   {
-      //     withCredentials: true,
-      //     headers: {
-      //       "Content-Type": "application/json",
-      //     },
-      //   }
-      // );
+      const response = await axios.post(
+        `${import.meta.env.VITE_BACKEND_URL}/api/v1/user/reset-password`,
+        { newPassword: password, confirmPassword, email: userId },
+        {
+          withCredentials: true,
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+      console.log(response?.data?.data, "response");
 
       navigate("/");
     } catch (err) {
